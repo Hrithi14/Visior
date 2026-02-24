@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WISER — Authorized Researcher Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&family=Sora:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --primary: #4567B7;
+    --primary-dark: #2f4f9f;
+    --primary-light: #6b89d4;
+    --primary-ultra-light: #eef2fb;
+    --accent: #2de8b0;
+    --accent2: #f5a623;
+    --danger: #e55353;
+    --success: #22c55e;
+    --pending: #f5a623;
+    --bg: #f4f6fb;
+    --surface: #ffffff;
+    --surface2: #f8faff;
+    --border: #dde4f5;
+    --text: #1a2240;
+    --text-2: #4a5580;
+    --text-3: #8a96b8;
+    --shadow-sm: 0 1px 4px rgba(69,103,183,0.07);
+    --shadow: 0 4px 20px rgba(69,103,183,0.10);
+    --shadow-lg: 0 8px 40px rgba(69,103,183,0.15);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --header-h: 64px;
+    --nav-h: 48px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    overflow-x: hidden;
+  }
+
+  #header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: var(--header-h);
+    background: var(--primary);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 28px;
+    box-shadow: 0 2px 16px rgba(30,50,120,0.22);
+  }
+  .logo-wrap { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+  .logo-shield {
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .logo-text { color: #fff; }
+  .logo-text strong { font-family: 'Sora', sans-serif; font-size: 18px; letter-spacing: 1px; }
+  .logo-text span { display: block; font-size: 10.5px; opacity: 0.75; letter-spacing: 0.5px; font-weight: 300; }
+
+  .header-right { display: flex; align-items: center; gap: 16px; }
+  .blockchain-badge {
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.12); border-radius: 20px;
+    padding: 5px 12px; color: #fff; font-size: 11.5px;
+  }
+  .chain-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  .profile-btn {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 20px; padding: 6px 14px 6px 8px;
+    color: #fff; cursor: pointer; transition: background 0.2s;
+    font-size: 13px; font-family: inherit;
+  }
+  .profile-btn:hover { background: rgba(255,255,255,0.22); }
+  .avatar {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: linear-gradient(135deg,#a5c0ff,#4567B7);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+  }
+  .logout-btn {
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25);
+    color: #fff; padding: 7px 16px; border-radius: 20px; cursor: pointer;
+    font-size: 12.5px; font-family: inherit; transition: background 0.2s;
+  }
+  .logout-btn:hover { background: rgba(229,83,83,0.5); }
+
+  #navbar {
+    position: fixed; top: var(--header-h); left: 0; right: 0; z-index: 99;
+    height: var(--nav-h);
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center;
+    padding: 0 28px; gap: 4px;
+    box-shadow: var(--shadow-sm);
+  }
+  .nav-link {
+    padding: 8px 16px; border-radius: 8px;
+    color: var(--text-2); font-weight: 500; font-size: 13px;
+    cursor: pointer; transition: all 0.18s; text-decoration: none;
+  }
+  .nav-link:hover { background: var(--primary-ultra-light); color: var(--primary); }
+  .nav-link.active { background: var(--primary-ultra-light); color: var(--primary); font-weight: 600; }
+  .nav-link.logout-nav { margin-left: auto; color: var(--danger); }
+  .nav-link.logout-nav:hover { background: #fff0f0; }
+
+  #main {
+    margin-top: calc(var(--header-h) + var(--nav-h));
+    min-height: calc(100vh - var(--header-h) - var(--nav-h));
+    padding: 24px 28px 40px;
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    grid-template-rows: auto;
+    gap: 20px;
+    max-width: 1600px;
+    margin-left: auto; margin-right: auto;
+  }
+
+  .col-left { display: flex; flex-direction: column; gap: 20px; }
+  .col-right { display: flex; flex-direction: column; gap: 20px; }
+
+  .card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+  }
+  .card-title {
+    font-family: 'Sora', sans-serif;
+    font-size: 13.5px; font-weight: 600;
+    color: var(--text); display: flex; align-items: center; gap: 8px;
+  }
+  .card-body { padding: 20px; }
+
+  #welcome {
+    background: linear-gradient(125deg, #4567B7 0%, #2f4f9f 60%, #1a3080 100%);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    color: #fff;
+    display: flex; justify-content: space-between; align-items: center;
+    position: relative; overflow: hidden;
+    grid-column: 1 / -1;
+    box-shadow: var(--shadow-lg);
+  }
+  #welcome::before {
+    content: '';
+    position: absolute; top: -40px; right: -40px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+  #welcome::after {
+    content: '';
+    position: absolute; bottom: -60px; right: 120px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .welcome-left h2 { font-family: 'Sora', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+  .welcome-left p { font-size: 12.5px; opacity: 0.8; }
+  .welcome-meta { display: flex; gap: 28px; margin-top: 14px; }
+  .meta-label { font-size: 10px; opacity: 0.65; text-transform: uppercase; letter-spacing: 0.6px; }
+  .meta-val { font-size: 13px; font-weight: 500; margin-top: 2px; font-family: 'DM Mono', monospace; }
+  .welcome-right { text-align: right; position: relative; z-index: 1; }
+  .tier-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px; padding: 8px 18px;
+    font-size: 13px; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 10px;
+  }
+  .chain-log-note {
+    font-size: 11px; opacity: 0.7;
+    display: flex; align-items: center; gap: 5px; justify-content: flex-end;
+  }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    border-radius: 20px; padding: 3px 10px; font-size: 11px; font-weight: 600;
+  }
+  .badge-dot { width: 6px; height: 6px; border-radius: 50%; }
+  .badge.approved { background: #dcfce7; color: #15803d; }
+  .badge.approved .badge-dot { background: #22c55e; }
+  .badge.pending { background: #fef3c7; color: #92400e; }
+  .badge.pending .badge-dot { background: #f5a623; }
+  .badge.draft { background: #f1f5f9; color: #475569; }
+  .badge.draft .badge-dot { background: #94a3b8; }
+  .badge.rejected { background: #fee2e2; color: #991b1b; }
+  .badge.rejected .badge-dot { background: #e55353; }
+  .badge.review { background: #eff6ff; color: #1d4ed8; }
+  .badge.review .badge-dot { background: #60a5fa; }
+
+  .req-table { width: 100%; border-collapse: collapse; }
+  .req-table th {
+    text-align: left; font-size: 10.5px; font-weight: 600;
+    color: var(--text-3); text-transform: uppercase; letter-spacing: 0.5px;
+    padding: 8px 12px; border-bottom: 1px solid var(--border);
+  }
+  .req-table td { padding: 12px 12px; border-bottom: 1px solid #f0f3fa; vertical-align: middle; }
+  .req-table tr:last-child td { border-bottom: none; }
+  .req-table tr:hover td { background: var(--surface2); }
+  .trial-id { font-family: 'DM Mono', monospace; font-size: 11.5px; color: var(--primary); font-weight: 500; }
+  .trial-name { font-size: 13px; font-weight: 500; }
+  .exp-date { font-size: 11.5px; color: var(--text-2); font-family: 'DM Mono', monospace; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    border-radius: var(--radius-sm); border: none;
+    font-family: inherit; font-weight: 500; cursor: pointer;
+    font-size: 11.5px; padding: 6px 12px; transition: all 0.18s;
+  }
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-primary:hover { background: var(--primary-dark); }
+  .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-2); }
+  .btn-outline:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-ultra-light); }
+  .btn-ghost { background: var(--primary-ultra-light); color: var(--primary); }
+  .btn-ghost:hover { background: #dce8ff; }
+  .btn-sm { padding: 4px 10px; font-size: 11px; }
+  .btn-group { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  .pt-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .pt-table th {
+    text-align: left; padding: 7px 10px; font-size: 10px;
+    font-weight: 600; color: var(--text-3); text-transform: uppercase;
+    letter-spacing: 0.5px; border-bottom: 2px solid var(--border);
+  }
+  .pt-table td { padding: 9px 10px; border-bottom: 1px solid #f0f3fa; }
+  .pt-table tr:hover td { background: var(--surface2); }
+  .anon-id { font-family: 'DM Mono', monospace; color: var(--primary); font-size: 11px; }
+  .outcome-good { color: var(--success); font-weight: 600; }
+  .outcome-mod { color: var(--pending); font-weight: 600; }
+
+  .audit-row {
+    display: grid; grid-template-columns: 130px 1fr 1fr;
+    padding: 10px 0; border-bottom: 1px solid #f0f3fa;
+    align-items: center; gap: 8px;
+  }
+  .audit-row:last-child { border-bottom: none; }
+  .audit-time { font-family: 'DM Mono', monospace; font-size: 10.5px; color: var(--text-3); }
+  .audit-action { font-size: 12.5px; color: var(--text); }
+  .audit-hash {
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--primary);
+    background: var(--primary-ultra-light); border-radius: 4px;
+    padding: 2px 7px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .audit-new { animation: fadeIn 0.5s ease; }
+  @keyframes fadeIn { from { background: #eef6ff; } to { background: transparent; } }
+
+  .stats-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1px; background: var(--border); border-radius: var(--radius); overflow: hidden;
+    grid-column: 1 / -1;
+  }
+  .stat-item { background: var(--surface); padding: 18px 20px; }
+  .stat-num {
+    font-family: 'Sora', sans-serif; font-size: 26px; font-weight: 700;
+    color: var(--primary); line-height: 1;
+  }
+  .stat-label { font-size: 11.5px; color: var(--text-3); margin-top: 5px; }
+  .stat-change { font-size: 10.5px; margin-top: 4px; }
+  .stat-change.up { color: var(--success); }
+
+  .demo-bar-wrap { margin-bottom: 12px; }
+  .demo-bar-label { display: flex; justify-content: space-between; font-size: 11.5px; margin-bottom: 5px; color: var(--text-2); }
+  .demo-bar-track { height: 8px; background: #e8edfa; border-radius: 20px; overflow: hidden; }
+  .demo-bar-fill { height: 100%; border-radius: 20px; background: linear-gradient(90deg, var(--primary-light), var(--primary)); transition: width 1.2s cubic-bezier(.4,0,.2,1); }
+
+  .chain-panel { padding: 16px; background: #f8faff; border-radius: var(--radius-sm); margin-top: 12px; }
+  .chain-panel-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-3); margin-bottom: 10px; }
+  .chain-row { display: flex; justify-content: space-between; font-size: 11.5px; margin-bottom: 6px; }
+  .chain-row .label { color: var(--text-3); }
+  .chain-row .val { font-family: 'DM Mono', monospace; color: var(--primary); font-size: 10.5px; }
+
+  .proposal-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 16px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border); margin-bottom: 10px;
+    transition: box-shadow 0.2s; cursor: pointer;
+  }
+  .proposal-item:hover { box-shadow: var(--shadow); }
+  .proposal-item:last-child { margin-bottom: 0; }
+  .proposal-name { font-size: 13px; font-weight: 500; }
+  .proposal-date { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+
+  #toast-container {
+    position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .toast {
+    background: var(--surface); border: 1px solid var(--border);
+    border-left: 4px solid var(--success);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px; font-size: 12.5px;
+    box-shadow: var(--shadow-lg);
+    max-width: 340px;
+    animation: slideIn 0.3s ease, fadeOut 0.4s ease 3s forwards;
+  }
+  .toast.error { border-left-color: var(--danger); }
+  .toast.info { border-left-color: var(--primary); }
+  .toast-title { font-weight: 600; margin-bottom: 2px; }
+  .toast-hash { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-3); word-break: break-all; }
+  @keyframes slideIn { from { transform: translateX(40px); opacity: 0; } to { transform: none; opacity: 1; } }
+  @keyframes fadeOut { to { opacity: 0; transform: translateX(40px); } }
+
+  .live-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: #dcfce7; color: #15803d;
+    border-radius: 20px; padding: 3px 10px; font-size: 10.5px; font-weight: 600;
+  }
+  .live-dot { width: 6px; height: 6px; background: var(--success); border-radius: 50%; animation: pulse 1.5s infinite; }
+
+  .section-action { font-size: 12px; color: var(--primary); cursor: pointer; font-weight: 500; }
+  .section-action:hover { text-decoration: underline; }
+  .tag { display: inline-block; background: var(--primary-ultra-light); color: var(--primary); border-radius: 4px; padding: 2px 8px; font-size: 10.5px; font-weight: 500; }
+
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 30px;
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+    grid-column: 1 / -1;
+  }
+
+  .footer-links a {
+    color: var(--text-3);
+    text-decoration: none;
+    font-size: 12px;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover {
+    color: var(--primary);
+  }
+
+  @media (max-width: 1100px) { #main { grid-template-columns: 1fr; } }
+  @media (max-width: 700px) {
+    #main { padding: 16px; }
+    .stats-strip { grid-template-columns: repeat(2,1fr); }
+    .welcome-meta { flex-wrap: wrap; gap: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<header id="header">
+  <div class="logo-wrap" onclick="window.location.href='home.html'">
+    <div class="logo-shield">🛡️</div>
+    <div class="logo-text">
+      <strong>WISER</strong>
+      <span>Verified Intelligent Secure Evidence Registry</span>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="blockchain-badge">
+      <span class="chain-dot"></span>
+      <span>Hyperledger Fabric · ch-wiser-01</span>
+    </div>
+    <div class="profile-btn" onclick="toggleProfile()">
+      <div class="avatar">👤</div>
+      Dr. Sarah Smith ▾
+    </div>
+    <button class="logout-btn" onclick="confirmLogout()">Logout</button>
+  </div>
+</header>
+
+<nav id="navbar">
+  <a class="nav-link active" onclick="window.location.href='researcher-dashbord.html'">Dashboard</a>
+  <a class="nav-link" onclick="window.location.href='home.html'">Search</a>
+  <a class="nav-link" onclick="window.location.href='voting.html'">My Requests</a>
+  <a class="nav-link" onclick="window.location.href='full-data.html?trial=WISER-T2-20240312'">My Trials</a>
+  <a class="nav-link" onclick="window.location.href='profile.html'">Profile</a>
+  <a class="nav-link logout-nav" onclick="confirmLogout()">⎋ Logout</a>
+</nav>
+
+<div id="main">
+
+  <div id="welcome">
+    <div class="welcome-left">
+      <h2>Welcome back, Dr. Sarah Smith</h2>
+      <p>Authorized Researcher · WISER Secure Clinical Research Portal</p>
+      <div class="welcome-meta">
+        <div class="meta-item">
+          <div class="meta-label">Last Login</div>
+          <div class="meta-val" id="last-login">—</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">IP Address</div>
+          <div class="meta-val" id="user-ip">—</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Access Expires</div>
+          <div class="meta-val">2025-12-31</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Session Token</div>
+          <div class="meta-val" id="session-token">—</div>
+        </div>
+      </div>
+    </div>
+    <div class="welcome-right">
+      <div class="tier-badge">⬡ Tier 2 — Full Access Researcher</div>
+      <div class="chain-log-note">⛓ All actions are logged on blockchain.</div>
+    </div>
+  </div>
+
+  <div class="stats-strip">
+    <div class="stat-item">
+      <div class="stat-num" id="stat-approved">4</div>
+      <div class="stat-label">Approved Accesses</div>
+      <div class="stat-change up">↑ 1 this month</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="stat-pending">2</div>
+      <div class="stat-label">Pending Requests</div>
+      <div class="stat-change">Active review</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="stat-trials">7</div>
+      <div class="stat-label">Trials Accessed</div>
+      <div class="stat-change up">↑ 3 this quarter</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="stat-logs">138</div>
+      <div class="stat-label">Blockchain Entries</div>
+      <div class="stat-change up">Live</div>
+    </div>
+  </div>
+
+  <div class="col-left">
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">🔐 My Active Access Requests
+          <span class="live-pill"><span class="live-dot"></span>Live</span>
+        </div>
+        <span class="section-action" onclick="refreshRequests()">↺ Refresh</span>
+      </div>
+      <div class="card-body" style="padding:0;">
+        <table class="req-table">
+          <thead>
+            <tr>
+              <th>Trial ID</th>
+              <th>Trial Name</th>
+              <th>Status</th>
+              <th>Last Accessed</th>
+              <th>Expires</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="requests-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">📊 Recently Viewed Trials</div>
+        <span class="tag">Tier 2 Access</span>
+      </div>
+      <div class="card-body">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
+          <div>
+            <div style="font-weight:600;font-size:14px;">WISER-T2-20240312 · CARDIO-PRECISION-II</div>
+            <div style="font-size:11.5px;color:var(--text-3);margin-top:2px;">Phase III · Cardiology · n=2,840 · Full Dataset Access</div>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-primary" onclick="triggerAction('download','CARDIO-PRECISION-II'); window.location.href='full-data.html?trial=WISER-T2-20240312'">⬇ Download CSV</button>
+            <button class="btn btn-ghost" onclick="window.location.href='full-data.html?trial=WISER-T2-20240312'">📈 Run Analysis</button>
+            <button class="btn btn-outline" onclick="triggerAction('cite','CARDIO-PRECISION-II')">🔖 Cite</button>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:18px;">
+          <div>
+            <div style="font-size:11px;font-weight:600;text-transform:uppercase;color:var(--text-3);letter-spacing:.5px;margin-bottom:10px;">Age Distribution</div>
+            <div class="demo-bar-wrap"><div class="demo-bar-label"><span>18–34</span><span>12%</span></div><div class="demo-bar-track"><div class="demo-bar-fill" style="width:0%" data-w="12%"></div></div></div>
+            <div class="demo-bar-wrap"><div class="demo-bar-label"><span>35–54</span><span>38%</span></div><div class="demo-bar-track"><div class="demo-bar-fill" style="width:0%" data-w="38%"></div></div></div>
+            <div class="demo-bar-wrap"><div class="demo-bar-label"><span>55–69</span><span>33%</span></div><div class="demo-bar-track"><div class="demo-bar-fill" style="width:0%" data-w="33%"></div></div></div>
+            <div class="demo-bar-wrap"><div class="demo-bar-label"><span>70+</span><span>17%</span></div><div class="demo-bar-track"><div class="demo-bar-fill" style="width:0%" data-w="17%"></div></div></div>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:600;text-transform:uppercase;color:var(--text-3);letter-spacing:.5px;margin-bottom:10px;">Ethnicity</div>
+            <div class="demo-bar-wrap"><div class="demo-bar-label"><span>Caucasian</span><span>44%</span></div><div class="demo-bar-track"><div class="demo-bar-fill" style="width:0%;background:linear-gradient(90deg,#6b89d4,#4567B7)" data-w="44%"></div></div></div>
+            <div class="demo-bar-wrap"><div class="demo-bar-label"><span>Asian</span><span>22%</span></div><div class="demo-bar-track"><div class="demo-bar-fill" style="width:0%;background:linear-gradient(90deg,#6b89d4,#4567B7)" data-w="22%"></div></div></div>
+            <div class="demo-bar-wrap"><div class="demo-bar-label"><span>Hispanic</span><span>18%</span></div><div class="demo-bar-track"><div class="demo-bar-fill" style="width:0%;background:linear-gradient(90deg,#6b89d4,#4567B7)" data-w="18%"></div></div></div>
+            <div class="demo-bar-wrap"><div class="demo-bar-label"><span>African American</span><span>16%</span></div><div class="demo-bar-track"><div class="demo-bar-fill" style="width:0%;background:linear-gradient(90deg,#6b89d4,#4567B7)" data-w="16%"></div></div></div>
+          </div>
+        </div>
+
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;color:var(--text-3);letter-spacing:.5px;margin-bottom:8px;">Anonymized Patient Sample</div>
+        <div style="overflow-x:auto;">
+          <table class="pt-table">
+            <thead>
+              <tr><th>Anon ID</th><th>Age</th><th>Gender</th><th>Outcome</th><th>Side Effects</th><th>Response Rate</th></tr>
+            </thead>
+            <tbody id="patient-tbody"></tbody>
+          </table>
+        </div>
+
+        <div class="btn-group" style="margin-top:14px;">
+          <button class="btn btn-outline" onclick="triggerAction('export-meta','CARDIO-PRECISION-II')">📤 Export for Meta-analysis</button>
+        </div>
+
+        <div class="chain-panel">
+          <div class="chain-panel-title">⛓ Blockchain Record</div>
+          <div class="chain-row"><span class="label">Channel</span><span class="val">ch-wiser-clinical-01</span></div>
+          <div class="chain-row"><span class="label">Block Number</span><span class="val" id="block-num">2,891,441</span></div>
+          <div class="chain-row"><span class="label">Dataset Hash</span><span class="val">0x9f3a2c...b74e1d</span></div>
+          <div class="chain-row"><span class="label">Contract</span><span class="val">0x742d35Cc6634C053...</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="col-right">
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">🧾 My Research Proposals</div>
+        <span class="live-pill"><span class="live-dot"></span>Live</span>
+      </div>
+      <div class="card-body">
+        <div id="proposals-list"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">📜 Audit Log — My Activity</div>
+        <span class="section-action" onclick="viewFullAudit()">View Full Log →</span>
+      </div>
+      <div class="card-body" style="padding:16px;">
+        <div style="display:grid;grid-template-columns:130px 1fr 1fr;font-size:10px;font-weight:600;text-transform:uppercase;color:var(--text-3);letter-spacing:.5px;padding-bottom:8px;border-bottom:1px solid var(--border);gap:8px;">
+          <span>Time</span><span>Action</span><span>Blockchain TX</span>
+        </div>
+        <div id="audit-log-body"></div>
+        <div style="margin-top:12px;text-align:center;">
+          <button class="btn btn-outline" onclick="viewFullAudit()">View Full Audit Log</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  
+  <!-- Footer Links -->
+  <div class="footer-links">
+    <a href="help.html">Help</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+</div>
+
+<div id="toast-container"></div>
+
+<script>
+const USER = {
+  name: 'Dr. Sarah Smith',
+  ip: '192.168.1.' + Math.floor(100+Math.random()*50),
+  sessionToken: 'jwt.' + randomHex(8) + '.' + randomHex(8),
+};
+
+const REQUESTS = [
+  { id: 'WISER-T2-20240312', name: 'CARDIO-PRECISION-II', status: 'approved', lastAccessed: '2 hrs ago', expires: '2025-06-30' },
+  { id: 'WISER-T2-20240508', name: 'ONCO-BRIGHT-TRIAL', status: 'approved', lastAccessed: '1 day ago', expires: '2025-08-15' },
+  { id: 'WISER-T1-20240601', name: 'NEURO-LINK-ALPHA', status: 'pending', lastAccessed: 'Never', expires: '—' },
+  { id: 'WISER-T2-20240715', name: 'DIAB-CTRL-META', status: 'pending', lastAccessed: 'Never', expires: '—' },
+  { id: 'WISER-T3-20240110', name: 'IMMU-RESTORE-III', status: 'draft', lastAccessed: '5 days ago', expires: '—' },
+];
+
+const PROPOSALS = [
+  { title: 'Multi-Site Cardiovascular Risk Stratification', status: 'review', date: '2024-03-15' },
+  { title: 'AI-Driven Oncology Biomarker Prediction', status: 'approved', date: '2024-01-28' },
+  { title: 'Neurological Outcome Longitudinal Analysis', status: 'rejected', date: '2023-11-10' },
+];
+
+const PATIENTS = [
+  { id: 'PT-0284A', age: 58, gender: 'M', outcome: 'Improved', effects: 'Mild fatigue', rate: '87%' },
+  { id: 'PT-0391C', age: 63, gender: 'F', outcome: 'Stable', effects: 'None', rate: '74%' },
+  { id: 'PT-0455B', age: 49, gender: 'M', outcome: 'Improved', effects: 'Nausea (mild)', rate: '91%' },
+  { id: 'PT-0512D', age: 72, gender: 'F', outcome: 'Stable', effects: 'Headache', rate: '68%' },
+  { id: 'PT-0618E', age: 55, gender: 'M', outcome: 'Improved', effects: 'None', rate: '95%' },
+];
+
+const AUDIT_ENTRIES = [
+  { time: '14:32:01', action: 'Viewed trial CARDIO-PRECISION-II', tx: '0x' + randomHex(12) },
+  { time: '14:30:18', action: 'Downloaded anonymized dataset', tx: '0x' + randomHex(12) },
+  { time: '14:18:45', action: 'Login successful — Tier 2', tx: '0x' + randomHex(12) },
+  { time: '13:55:12', action: 'Submitted proposal NLP-NEURO-04', tx: '0x' + randomHex(12) },
+  { time: '11:22:36', action: 'Requested access: DIAB-CTRL-META', tx: '0x' + randomHex(12) },
+];
+
+function randomHex(len) {
+  return [...Array(len)].map(() => Math.floor(Math.random()*16).toString(16)).join('');
+}
+function generateTxHash() { return '0x' + randomHex(20); }
+function now() {
+  const d = new Date();
+  return d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+function fakeDelay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+function toast(title, hash, type='success') {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.innerHTML = `<div class="toast-title">${title}</div>${hash ? `<div class="toast-hash">TX: ${hash}</div>` : ''}`;
+  c.appendChild(t);
+  setTimeout(() => t.remove(), 3800);
+}
+
+function setNav(el, page) {
+  document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+  toast(`Navigating to ${page}…`, null, 'info');
+}
+
+function confirmLogout() {
+  if(confirm('Log out of WISER secure portal?\nThis session will be recorded on blockchain.')) {
+    const tx = generateTxHash();
+    logAudit('Logout initiated', tx);
+    toast('Session terminated', tx);
+    setTimeout(() => { window.location.href = 'login.html'; }, 1400);
+  }
+}
+function toggleProfile() { 
+  window.location.href = 'profile.html';
+}
+
+function renderRequests(data) {
+  const tbody = document.getElementById('requests-tbody');
+  tbody.innerHTML = data.map(r => {
+    const statusMap = { approved:'Approved', pending:'Pending', draft:'Draft' };
+    const btns = r.status === 'approved'
+      ? `<button class="btn btn-ghost btn-sm" onclick="window.location.href='full-data.html?trial=${r.id}'">View Data</button>`
+      : r.status === 'pending'
+      ? `<button class="btn btn-outline btn-sm" onclick="window.location.href='request-access.html?trial=${r.id}'">Follow Up</button>`
+      : `<button class="btn btn-primary btn-sm" onclick="window.location.href='request-access.html?trial=${r.id}'">Submit</button>`;
+    return `<tr>
+      <td><span class="trial-id">${r.id}</span></td>
+      <td><div class="trial-name">${r.name}</div></td>
+      <td><span class="badge ${r.status}"><span class="badge-dot"></span>${statusMap[r.status]}</span></td>
+      <td><span class="exp-date">${r.lastAccessed}</span></td>
+      <td><span class="exp-date">${r.expires}</span></td>
+      <td><div class="btn-group">${btns}</div></td>
+    </tr>`;
+  }).join('');
+}
+
+function renderProposals(data) {
+  const el = document.getElementById('proposals-list');
+  el.innerHTML = data.map(p => `
+    <div class="proposal-item" onclick="window.location.href='request-access.html'">
+      <div>
+        <div class="proposal-name">${p.title}</div>
+        <div class="proposal-date">Submitted: ${p.date}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+        <span class="badge ${p.status}"><span class="badge-dot"></span>${p.status === 'review' ? 'Under Review' : p.status.charAt(0).toUpperCase()+p.status.slice(1)}</span>
+        <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();window.location.href='request-access.html'">View Details</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderPatients() {
+  const tbody = document.getElementById('patient-tbody');
+  tbody.innerHTML = PATIENTS.map(p => `<tr>
+    <td><span class="anon-id">${p.id}</span></td>
+    <td>${p.age}</td>
+    <td>${p.gender}</td>
+    <td class="${p.outcome === 'Improved' ? 'outcome-good' : 'outcome-mod'}">${p.outcome}</td>
+    <td>${p.effects}</td>
+    <td style="font-weight:600;color:var(--primary)">${p.rate}</td>
+  </tr>`).join('');
+}
+
+function renderAudit(entries) {
+  const el = document.getElementById('audit-log-body');
+  el.innerHTML = entries.slice(0,8).map(e => `
+    <div class="audit-row">
+      <span class="audit-time">${e.time}</span>
+      <span class="audit-action">${e.action}</span>
+      <span class="audit-hash" title="${e.tx}">${e.tx}</span>
+    </div>
+  `).join('');
+}
+
+function logAudit(action, tx) {
+  AUDIT_ENTRIES.unshift({ time: now(), action, tx });
+  renderAudit(AUDIT_ENTRIES);
+  const first = document.querySelector('#audit-log-body .audit-row');
+  if(first) { first.classList.add('audit-new'); setTimeout(()=>first.classList.remove('audit-new'),600); }
+  const s = document.getElementById('stat-logs');
+  s.textContent = parseInt(s.textContent.replace(',',''))+1;
+}
+
+function viewFullAudit() {
+  toast('Full audit log — ' + AUDIT_ENTRIES.length + ' entries', null, 'info');
+  renderAudit(AUDIT_ENTRIES);
+}
+
+async function triggerAction(type, id) {
+  const labels = {
+    view: 'Accessed trial data', request: 'Followed up on access request',
+    submit: 'Submitted draft request', download: 'Downloaded anonymized dataset',
+    analyze: 'Initiated statistical analysis', cite: 'Generated citation for trial',
+    'export-meta': 'Exported dataset for meta-analysis', 'view-proposal': 'Viewed research proposal',
+  };
+  const label = labels[type] || type;
+  toast(`Processing: ${label}…`, null, 'info');
+  await fakeDelay(900);
+  const tx = generateTxHash();
+  logAudit(`${label} · ${id}`, tx);
+  const bn = document.getElementById('block-num');
+  if(bn) { const n = parseInt(bn.textContent.replace(/,/g,''))+1; bn.textContent = n.toLocaleString(); }
+  toast(`✓ ${label} logged on blockchain`, tx, 'success');
+  if(type === 'download') {
+    const csv = 'AnonID,Age,Gender,Outcome,SideEffects,ResponseRate\n' + PATIENTS.map(p=>`${p.id},${p.age},${p.gender},${p.outcome},${p.effects},${p.rate}`).join('\n');
+    const a = document.createElement('a');
+    a.href = 'data:text/csv,' + encodeURIComponent(csv);
+    a.download = `WISER_${id}_anonymized.csv`;
+    a.click();
+  }
+}
+
+function refreshRequests() {
+  toast('Refreshing access requests from server…', null, 'info');
+  setTimeout(() => {
+    const pend = REQUESTS.find(r=>r.status==='pending');
+    if(pend) { pend.status='approved'; pend.lastAccessed='Just now'; pend.expires='2025-09-01'; }
+    renderRequests(REQUESTS);
+    const tx = generateTxHash();
+    logAudit('Access requests synced from server', tx);
+    toast('Access requests updated', tx);
+  }, 1200);
+}
+
+function simulateRealTime() {
+  setInterval(() => {
+    const events = ['Blockchain heartbeat verified','Dataset integrity check passed','Peer node sync — ch-wiser-01','Smart contract state updated','Access token refreshed'];
+    logAudit(events[Math.floor(Math.random()*events.length)], generateTxHash());
+  }, 8000);
+  setInterval(() => {
+    const bn = document.getElementById('block-num');
+    if(bn) { const n = parseInt(bn.textContent.replace(/,/g,''))+Math.floor(1+Math.random()*3); bn.textContent = n.toLocaleString(); }
+  }, 15000);
+}
+
+function animateBars() {
+  setTimeout(() => {
+    document.querySelectorAll('.demo-bar-fill[data-w]').forEach(bar => { bar.style.width = bar.getAttribute('data-w'); });
+  }, 400);
+}
+
+function init() {
+  document.getElementById('last-login').textContent = new Date(Date.now()-3600000).toLocaleString('en-GB',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+  document.getElementById('user-ip').textContent = USER.ip;
+  document.getElementById('session-token').textContent = USER.sessionToken.substring(0,20)+'…';
+  renderRequests(REQUESTS);
+  renderProposals(PROPOSALS);
+  renderPatients();
+  renderAudit(AUDIT_ENTRIES);
+  animateBars();
+  simulateRealTime();
+  toast('Session authenticated · Tier 2 Access', generateTxHash());
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
