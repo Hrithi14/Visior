@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>WISER — Authorized Researcher Dashboard</title>
+<title>VISIOR — Authorized Researcher Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&family=Sora:wght@400;600;700&display=swap" rel="stylesheet" />
 <style>
@@ -363,14 +363,14 @@
   <div class="logo-wrap" onclick="window.location.href='home.html'">
     <div class="logo-shield">🛡️</div>
     <div class="logo-text">
-      <strong>WISER</strong>
+      <strong>VISIOR</strong>
       <span>Verified Intelligent Secure Evidence Registry</span>
     </div>
   </div>
   <div class="header-right">
     <div class="blockchain-badge">
       <span class="chain-dot"></span>
-      <span>Hyperledger Fabric · ch-wiser-01</span>
+      <span>Hyperledger Fabric · ch-VISIOR-01</span>
     </div>
     <div class="profile-btn" onclick="toggleProfile()">
       <div class="avatar">👤</div>
@@ -384,7 +384,7 @@
   <a class="nav-link active" onclick="window.location.href='researcher-dashbord.html'">Dashboard</a>
   <a class="nav-link" onclick="window.location.href='home.html'">Search</a>
   <a class="nav-link" onclick="window.location.href='voting.html'">My Requests</a>
-  <a class="nav-link" onclick="window.location.href='full-data.html?trial=WISER-T2-20240312'">My Trials</a>
+  <a class="nav-link" onclick="window.location.href='full-data.html?trial=VISIOR-T2-20240312'">My Trials</a>
   <a class="nav-link" onclick="window.location.href='profile.html'">Profile</a>
   <a class="nav-link logout-nav" onclick="confirmLogout()">⎋ Logout</a>
 </nav>
@@ -394,7 +394,7 @@
   <div id="welcome">
     <div class="welcome-left">
       <h2>Welcome back, Dr. Sarah Smith</h2>
-      <p>Authorized Researcher · WISER Secure Clinical Research Portal</p>
+      <p>Authorized Researcher · VISIOR Secure Clinical Research Portal</p>
       <div class="welcome-meta">
         <div class="meta-item">
           <div class="meta-label">Last Login</div>
@@ -477,12 +477,12 @@
       <div class="card-body">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
           <div>
-            <div style="font-weight:600;font-size:14px;">WISER-T2-20240312 · CARDIO-PRECISION-II</div>
+            <div style="font-weight:600;font-size:14px;">VISIOR-T2-20240312 · CARDIO-PRECISION-II</div>
             <div style="font-size:11.5px;color:var(--text-3);margin-top:2px;">Phase III · Cardiology · n=2,840 · Full Dataset Access</div>
           </div>
           <div class="btn-group">
-            <button class="btn btn-primary" onclick="triggerAction('download','CARDIO-PRECISION-II'); window.location.href='full-data.html?trial=WISER-T2-20240312'">⬇ Download CSV</button>
-            <button class="btn btn-ghost" onclick="window.location.href='full-data.html?trial=WISER-T2-20240312'">📈 Run Analysis</button>
+            <button class="btn btn-primary" onclick="triggerAction('download','CARDIO-PRECISION-II'); window.location.href='full-data.html?trial=VISIOR-T2-20240312'">⬇ Download CSV</button>
+            <button class="btn btn-ghost" onclick="window.location.href='full-data.html?trial=VISIOR-T2-20240312'">📈 Run Analysis</button>
             <button class="btn btn-outline" onclick="triggerAction('cite','CARDIO-PRECISION-II')">🔖 Cite</button>
           </div>
         </div>
@@ -520,7 +520,7 @@
 
         <div class="chain-panel">
           <div class="chain-panel-title">⛓ Blockchain Record</div>
-          <div class="chain-row"><span class="label">Channel</span><span class="val">ch-wiser-clinical-01</span></div>
+          <div class="chain-row"><span class="label">Channel</span><span class="val">ch-VISIOR-clinical-01</span></div>
           <div class="chain-row"><span class="label">Block Number</span><span class="val" id="block-num">2,891,441</span></div>
           <div class="chain-row"><span class="label">Dataset Hash</span><span class="val">0x9f3a2c...b74e1d</span></div>
           <div class="chain-row"><span class="label">Contract</span><span class="val">0x742d35Cc6634C053...</span></div>
@@ -580,11 +580,11 @@ const USER = {
 };
 
 const REQUESTS = [
-  { id: 'WISER-T2-20240312', name: 'CARDIO-PRECISION-II', status: 'approved', lastAccessed: '2 hrs ago', expires: '2025-06-30' },
-  { id: 'WISER-T2-20240508', name: 'ONCO-BRIGHT-TRIAL', status: 'approved', lastAccessed: '1 day ago', expires: '2025-08-15' },
-  { id: 'WISER-T1-20240601', name: 'NEURO-LINK-ALPHA', status: 'pending', lastAccessed: 'Never', expires: '—' },
-  { id: 'WISER-T2-20240715', name: 'DIAB-CTRL-META', status: 'pending', lastAccessed: 'Never', expires: '—' },
-  { id: 'WISER-T3-20240110', name: 'IMMU-RESTORE-III', status: 'draft', lastAccessed: '5 days ago', expires: '—' },
+  { id: 'VISIOR-T2-20240312', name: 'CARDIO-PRECISION-II', status: 'approved', lastAccessed: '2 hrs ago', expires: '2025-06-30' },
+  { id: 'VISIOR-T2-20240508', name: 'ONCO-BRIGHT-TRIAL', status: 'approved', lastAccessed: '1 day ago', expires: '2025-08-15' },
+  { id: 'VISIOR-T1-20240601', name: 'NEURO-LINK-ALPHA', status: 'pending', lastAccessed: 'Never', expires: '—' },
+  { id: 'VISIOR-T2-20240715', name: 'DIAB-CTRL-META', status: 'pending', lastAccessed: 'Never', expires: '—' },
+  { id: 'VISIOR-T3-20240110', name: 'IMMU-RESTORE-III', status: 'draft', lastAccessed: '5 days ago', expires: '—' },
 ];
 
 const PROPOSALS = [
@@ -635,7 +635,7 @@ function setNav(el, page) {
 }
 
 function confirmLogout() {
-  if(confirm('Log out of WISER secure portal?\nThis session will be recorded on blockchain.')) {
+  if(confirm('Log out of VISIOR secure portal?\nThis session will be recorded on blockchain.')) {
     const tx = generateTxHash();
     logAudit('Logout initiated', tx);
     toast('Session terminated', tx);
@@ -738,7 +738,7 @@ async function triggerAction(type, id) {
     const csv = 'AnonID,Age,Gender,Outcome,SideEffects,ResponseRate\n' + PATIENTS.map(p=>`${p.id},${p.age},${p.gender},${p.outcome},${p.effects},${p.rate}`).join('\n');
     const a = document.createElement('a');
     a.href = 'data:text/csv,' + encodeURIComponent(csv);
-    a.download = `WISER_${id}_anonymized.csv`;
+    a.download = `VISIOR_${id}_anonymized.csv`;
     a.click();
   }
 }
@@ -757,7 +757,7 @@ function refreshRequests() {
 
 function simulateRealTime() {
   setInterval(() => {
-    const events = ['Blockchain heartbeat verified','Dataset integrity check passed','Peer node sync — ch-wiser-01','Smart contract state updated','Access token refreshed'];
+    const events = ['Blockchain heartbeat verified','Dataset integrity check passed','Peer node sync — ch-VISIOR-01','Smart contract state updated','Access token refreshed'];
     logAudit(events[Math.floor(Math.random()*events.length)], generateTxHash());
   }, 8000);
   setInterval(() => {

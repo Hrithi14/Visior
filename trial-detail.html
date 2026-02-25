@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>WISER — Trial Detail: NCT-2024-0088</title>
+<title>VISIOR — Trial Detail: NCT-2024-0088</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet"/>
@@ -452,7 +452,7 @@ function BlockchainPanel({ trial }) {
           </>) : (<>
             <ChainKv label="Channel Name"      value={trial.channel}/>
             <ChainKv label="Block Number"      value={`#${trial.blockNumber?.toLocaleString()}`}/>
-            <ChainKv label="Chaincode"         value="wiser-trials-cc"/>
+            <ChainKv label="Chaincode"         value="VISIOR-trials-cc"/>
             <ChainKv label="Blockchain Type"   value="Hyperledger Fabric"/>
           </>)}
           <ChainKv label="Last Verified"       value={ts}/>
@@ -620,7 +620,7 @@ function App() {
       <div style={{ paddingTop:66, background:"white", borderBottom:"1px solid #EDF2FB" }}>
         <div style={{ maxWidth:1440, margin:"0 auto", padding:"12px 40px", display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:10 }}>
           <div style={{ display:"flex", alignItems:"center", gap:8, fontSize:12, color:"#8FA0BA" }}>
-            <a href="home.html" style={{ color:"#4567B7", textDecoration:"none", fontWeight:600 }}>WISER</a>
+            <a href="home.html" style={{ color:"#4567B7", textDecoration:"none", fontWeight:600 }}>VISIOR</a>
             <span>›</span>
             <a href="home.html" style={{ color:"#8FA0BA", textDecoration:"none" }}>Search Results</a>
             <span>›</span>
@@ -914,7 +914,7 @@ function App() {
           <div style={{ display:"flex", alignItems:"center", gap:6 }}>
             <LiveDot active size={6}/>
             <span style={{ fontSize:11, color:"rgba(255,255,255,0.3)" }}>
-              © 2026 WISER – Multi-Blockchain Clinical Trials Consortium
+              © 2026 VISIOR – Multi-Blockchain Clinical Trials Consortium
             </span>
           </div>
         </div>
