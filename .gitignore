@@ -1,0 +1,27 @@
+# Binaries
+*.tar.gz
+*.zip
+
+# Fabric specific
+/crypto-config/
+/channel-artifacts/
+/organizations/
+/wallets/
+/hyperledger-frabic/fabric-samples/bin/
+/hyperledger-frabic/fabric-samples/config/
+
+# Environment files
+*.env
+.env.local
+set_org1_env.sh
+
+# IDE files
+.vscode/
+*.code-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
