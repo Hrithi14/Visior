@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VISIOR — Help Center</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #f4f7fc;
+    color: #1a2035;
+    line-height: 1.6;
+  }
+  .header {
+    background: white;
+    border-bottom: 1px solid #e2e6f0;
+    padding: 0 32px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .logo-icon {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, #4567B7, #334e96);
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .logo-text strong {
+    font-size: 16px;
+    font-weight: 700;
+    color: #4567B7;
+  }
+  .logo-text span {
+    font-size: 9.5px;
+    color: #8b94b0;
+    text-transform: uppercase;
+  }
+  .main {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 32px;
+  }
+  h1 { font-size: 32px; margin-bottom: 8px; }
+  .subtitle { color: #5a6480; margin-bottom: 40px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+  .card {
+    background: white;
+    border: 1px solid #e2e6f0;
+    border-radius: 12px;
+    padding: 24px;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .card:hover {
+    box-shadow: 0 8px 24px rgba(69,103,183,0.15);
+    transform: translateY(-2px);
+  }
+  .card-icon {
+    font-size: 32px;
+    margin-bottom: 16px;
+  }
+  .card h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  .card p {
+    color: #5a6480;
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+  .card-link {
+    color: #4567B7;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .faq-section {
+    background: white;
+    border: 1px solid #e2e6f0;
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 48px;
+  }
+  .faq-item {
+    border-bottom: 1px solid #e2e6f0;
+    padding: 20px 0;
+  }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-question {
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+  }
+  .faq-answer {
+    color: #5a6480;
+    font-size: 14px;
+    display: none;
+    padding-top: 8px;
+  }
+  .faq-answer.show { display: block; }
+  .contact-section {
+    background: linear-gradient(135deg, #4567B7, #334e96);
+    border-radius: 12px;
+    padding: 40px;
+    color: white;
+    text-align: center;
+  }
+  .contact-section h2 { margin-bottom: 16px; }
+  .contact-section p { margin-bottom: 24px; opacity: 0.9; }
+  .btn {
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-primary {
+    background: white;
+    color: #4567B7;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+  .btn-outline {
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    margin-left: 12px;
+  }
+  .btn-outline:hover {
+    background: white;
+    color: #4567B7;
+  }
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border: 1px solid #e2e6f0;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+    margin-bottom: 24px;
+    text-decoration: none;
+    color: #1a2035;
+  }
+  .back-btn:hover {
+    border-color: #4567B7;
+    color: #4567B7;
+  }
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #e2e6f0;
+  }
+  .footer-links a {
+    color: #8b94b0;
+    text-decoration: none;
+    font-size: 12px;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover {
+    color: #4567B7;
+  }
+  .search-box {
+    margin-bottom: 40px;
+    position: relative;
+  }
+  .search-box input {
+    width: 100%;
+    padding: 16px 24px 16px 56px;
+    border: 2px solid #e2e6f0;
+    border-radius: 40px;
+    font-size: 16px;
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-box input:focus {
+    border-color: #4567B7;
+  }
+  .search-icon {
+    position: absolute;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #8b94b0;
+  }
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="logo" onclick="window.location.href='home.html'">
+    <div class="logo-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+        <path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.5C16.5 22.15 20 17.25 20 12V6L12 2z"/>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <strong>VISIOR</strong>
+      <span>HELP CENTER</span>
+    </div>
+  </div>
+</header>
+
+<div class="main">
+  <button class="back-btn" onclick="window.history.back()">← Back</button>
+  
+  <h1>How can we help you?</h1>
+  <div class="subtitle">Search our help center or browse the topics below</div>
+
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="help-search" placeholder="Search for help articles..." onkeyup="searchHelp()">
+  </div>
+
+  <div class="grid" id="help-grid">
+    <div class="card" onclick="window.location.href='#account'">
+      <div class="card-icon">🔐</div>
+      <h3>Account & Login</h3>
+      <p>Having trouble signing in? Reset password, MFA setup, account recovery.</p>
+      <span class="card-link">Learn more →</span>
+    </div>
+    <div class="card" onclick="window.location.href='#access'">
+      <div class="card-icon">📋</div>
+      <h3>Access Requests</h3>
+      <p>How to request trial access, approval process, and timelines.</p>
+      <span class="card-link">Learn more →</span>
+    </div>
+    <div class="card" onclick="window.location.href='#blockchain'">
+      <div class="card-icon">⛓</div>
+      <h3>Blockchain & Verification</h3>
+      <p>Understanding blockchain records, transaction hashes, and verification.</p>
+      <span class="card-link">Learn more →</span>
+    </div>
+    <div class="card" onclick="window.location.href='#roles'">
+      <div class="card-icon">👥</div>
+      <h3>Roles & Permissions</h3>
+      <p>Researcher, PI, Sponsor - what each role can access and do.</p>
+      <span class="card-link">Learn more →</span>
+    </div>
+    <div class="card" onclick="window.location.href='#data'">
+      <div class="card-icon">📊</div>
+      <h3>Data & Analytics</h3>
+      <p>Working with trial data, exports, statistical analysis tools.</p>
+      <span class="card-link">Learn more →</span>
+    </div>
+    <div class="card" onclick="window.location.href='#compliance'">
+      <div class="card-icon">⚖️</div>
+      <h3>Compliance & Security</h3>
+      <p>HIPAA, 21 CFR Part 11, data privacy and security policies.</p>
+      <span class="card-link">Learn more →</span>
+    </div>
+  </div>
+
+  <div class="faq-section">
+    <h2 style="margin-bottom: 24px;">Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        How do I reset my password?
+        <span>▼</span>
+      </div>
+      <div class="faq-answer">
+        Click "Forgot Password" on the login page. You'll receive an email with a reset link. For security, this action is logged on blockchain. If you don't receive the email within 5 minutes, check your spam folder or contact support.
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        What is blockchain verification?
+        <span>▼</span>
+      </div>
+      <div class="faq-answer">
+        Every action (login, data access, edits) is recorded on Hyperledger Fabric or Ethereum blockchain. This creates an immutable audit trail for regulatory compliance. Each transaction has a unique hash that can be verified on the blockchain explorer.
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        How long do access requests take?
+        <span>▼</span>
+      </div>
+      <div class="faq-answer">
+        Access requests are reviewed within 3-5 business days by the data access committee. You'll be notified by email once reviewed. The review process and decision are recorded on blockchain for transparency.
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        What is Multi-Factor Authentication (MFA)?
+        <span>▼</span>
+      </div>
+      <div class="faq-answer">
+        MFA adds an extra layer of security by requiring a second verification method (authenticator app, SMS code, or FIDO2 key) in addition to your password. This is mandatory for all VISIOR accounts to ensure secure access to sensitive clinical data.
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        How is patient data protected?
+        <span>▼</span>
+      </div>
+      <div class="faq-answer">
+        All patient data is encrypted at rest and in transit using AES-256 encryption. Access is strictly controlled through role-based permissions, and all access attempts are logged on blockchain. The platform is fully HIPAA compliant and meets 21 CFR Part 11 requirements.
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-section">
+    <h2>Still need help?</h2>
+    <p>Our support team is available 24/7 to assist you with any questions.</p>
+    <a href="mailto:support@VISIOR.health" class="btn btn-primary">Email Support</a>
+    <a href="contact.html" class="btn btn-outline">Contact Form</a>
+  </div>
+
+  <div class="footer-links">
+    <a href="home.html">Home</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</div>
+
+<script>
+function toggleFaq(element) {
+  const answer = element.nextElementSibling;
+  const arrow = element.querySelector('span');
+  answer.classList.toggle('show');
+  arrow.style.transform = answer.classList.contains('show') ? 'rotate(180deg)' : 'none';
+}
+
+function searchHelp() {
+  const searchTerm = document.getElementById('help-search').value.toLowerCase();
+  const cards = document.querySelectorAll('.card');
+  
+  cards.forEach(card => {
+    const text = card.textContent.toLowerCase();
+    if (text.includes(searchTerm) || searchTerm === '') {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+</script>
+</body>
+</html>

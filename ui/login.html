@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VISIOR — Secure Access</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; width: 100%; font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif; overflow: hidden; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+    #app { display: flex; height: 100vh; width: 100vw; }
+    #left-panel {
+      flex: 1;
+      background: linear-gradient(145deg, #0f172a 0%, #1e3a6e 50%, #4567B7 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 48px 56px;
+      position: relative;
+      overflow: hidden;
+    }
+    #left-panel::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: rgba(69,103,183,0.18);
+      pointer-events: none;
+    }
+    #left-panel::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -60px;
+      width: 240px; height: 240px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+      pointer-events: none;
+    }
+    .left-orb {
+      position: absolute;
+      top: 40%; left: 60%;
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      background: rgba(69,103,183,0.12);
+      pointer-events: none;
+    }
+    .left-logo { display: flex; align-items: center; gap: 14px; position: relative; z-index: 1; cursor: pointer; }
+    .left-logo-icon {
+      width: 44px; height: 44px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .logo-name { font-size: 22px; font-weight: 700; color: #fff; letter-spacing: -0.02em; line-height: 1; }
+    .logo-sub  { font-size: 11px; color: rgba(255,255,255,0.55); letter-spacing: 0.06em; margin-top: 2px; }
+    .left-content { position: relative; z-index: 1; }
+    .left-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 14px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 20px;
+      font-size: 11px; font-weight: 600;
+      color: rgba(255,255,255,0.85);
+      letter-spacing: 0.08em;
+      margin-bottom: 28px;
+    }
+    .left-heading {
+      font-size: 42px; font-weight: 800;
+      color: #fff;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+    .left-body {
+      font-size: 16px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.7;
+      margin-bottom: 40px;
+      max-width: 380px;
+    }
+    .left-features { display: flex; flex-direction: column; gap: 14px; }
+    .left-feature {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 18px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+    }
+    .feature-icon  { font-size: 22px; flex-shrink: 0; }
+    .feature-label { font-size: 13px; font-weight: 600; color: #fff; }
+    .feature-sub   { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px; font-family: 'DM Mono', monospace; }
+    .left-footer { position: relative; z-index: 1; }
+    .footer-chain {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 12px; color: rgba(255,255,255,0.4);
+      margin-bottom: 10px;
+    }
+    .footer-meta {
+      display: flex; gap: 20px;
+      font-size: 11px; color: rgba(255,255,255,0.3);
+      align-items: center;
+    }
+    .status-dot {
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+      margin-right: 4px;
+    }
+    #right-panel {
+      width: 520px;
+      background: #f8fafc;
+      display: flex;
+      flex-direction: column;
+      overflow: auto;
+    }
+    #right-header {
+      padding: 20px 40px;
+      display: flex; align-items: center; justify-content: flex-end;
+      border-bottom: 1px solid #e5e7eb;
+      background: #fff;
+      flex-shrink: 0;
+    }
+    .btn-home {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 18px;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 8px;
+      background: #fff;
+      cursor: pointer;
+      font-size: 13px; font-weight: 600;
+      color: #374151;
+      font-family: inherit;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-home:hover { border-color: #4567B7; color: #4567B7; }
+    #right-main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px; }
+    .step { width: 100%; animation: fadeUp 0.4s ease; display: none; }
+    .step.active { display: block; }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(15,23,42,0.08), 0 1px 4px rgba(15,23,42,0.04);
+      border: 1px solid rgba(0,0,0,0.06);
+      padding: 36px 36px 28px;
+    }
+    .card-center { text-align: center; margin-bottom: 28px; }
+    .card-title { font-size: 22px; font-weight: 700; color: #0f172a; letter-spacing: -0.02em; margin-bottom: 4px; }
+    .card-sub   { font-size: 13px; color: #6b7280; }
+    .error-banner {
+      padding: 10px 14px;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 8px;
+      margin-bottom: 18px;
+      font-size: 13px; color: #dc2626;
+      display: none; align-items: center; gap: 8px;
+    }
+    .error-banner.visible { display: flex; }
+    .field { margin-bottom: 18px; }
+    .field label {
+      display: block;
+      font-size: 12px; font-weight: 600; color: #374151;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .field-wrap { position: relative; }
+    .field-icon {
+      position: absolute; left: 14px; top: 50%;
+      transform: translateY(-50%);
+      color: #9ca3af; display: flex;
+      pointer-events: none;
+    }
+    .field-wrap input {
+      width: 100%;
+      padding: 11px 44px 11px 40px;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 10px;
+      font-size: 14px; color: #111827;
+      background: #fafafa;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+      font-family: inherit;
+    }
+    .field-wrap input:focus {
+      border-color: #4567B7;
+      box-shadow: 0 0 0 3px rgba(69,103,183,0.12);
+      background: #fff;
+    }
+    .field-wrap input.has-error { border-color: #ef4444; }
+    .field-right {
+      position: absolute; right: 12px; top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer; color: #6b7280;
+      display: flex;
+      background: none; border: none; padding: 0;
+    }
+    .field-error {
+      margin: 5px 0 0;
+      font-size: 12px; color: #ef4444;
+      display: none; align-items: center; gap: 4px;
+    }
+    .field-error.visible { display: flex; }
+    .row-between {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 22px;
+    }
+    .remember {
+      display: flex; align-items: center; gap: 8px;
+      cursor: pointer; font-size: 13px; color: #374151;
+    }
+    .remember input { accent-color: #4567B7; width: 14px; height: 14px; }
+    .btn-link {
+      background: none; border: none;
+      font-size: 13px; color: #4567B7;
+      cursor: pointer; font-family: inherit; font-weight: 500;
+    }
+    .btn-primary {
+      width: 100%;
+      padding: 13px;
+      background: #4567B7; color: #fff;
+      border: none; border-radius: 10px;
+      font-size: 14px; font-weight: 700;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      font-family: inherit;
+    }
+    .btn-primary:hover:not(:disabled) { background: #3555a0; }
+    .btn-primary:disabled { background: #93a8d8; cursor: not-allowed; }
+    .spinner {
+      width: 16px; height: 16px;
+      border: 2.5px solid rgba(255,255,255,0.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    .help-links {
+      display: flex; justify-content: center; gap: 24px;
+      margin-top: 18px;
+    }
+    .help-links button {
+      background: none; border: none;
+      font-size: 12px; color: #6b7280;
+      cursor: pointer; font-family: inherit;
+      transition: color 0.2s;
+    }
+    .help-links button:hover { color: #4567B7; }
+    .help-links span { color: #e5e7eb; }
+    .bottom-info { margin-top: 20px; text-align: center; }
+    .chain-line {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 11px; color: #9ca3af;
+    }
+    .meta-line {
+      margin-top: 10px;
+      display: flex; justify-content: center; gap: 20px;
+      font-size: 11px; color: #9ca3af; align-items: center;
+    }
+    .dot-green {
+      display: inline-block;
+      width: 7px; height: 7px;
+      border-radius: 50%; background: #22c55e;
+      margin-right: 3px;
+    }
+    .back-btn {
+      background: none; border: none; cursor: pointer;
+      font-size: 13px; color: #6b7280;
+      font-family: inherit; margin-bottom: 20px;
+      display: flex; align-items: center; gap: 5px; padding: 0;
+    }
+    .back-btn:hover { color: #4567B7; }
+    .mfa-icon {
+      width: 52px; height: 52px;
+      background: rgba(69,103,183,0.1);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 14px; font-size: 24px;
+    }
+    .session-tag { margin-top: 6px; font-size: 12px; color: #4567B7; font-weight: 500; }
+    .mfa-methods { display: flex; gap: 8px; margin-bottom: 22px; }
+    .mfa-btn {
+      flex: 1; padding: 14px 10px;
+      border: 2px solid #e5e7eb;
+      border-radius: 10px; background: #fafafa;
+      cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      transition: all 0.18s;
+      color: #6b7280; font-family: inherit;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
+    }
+    .mfa-btn:hover { border-color: #4567B7; background: #f0f5ff; }
+    .mfa-btn.selected { border-color: #4567B7; background: rgba(69,103,183,0.07); color: #4567B7; }
+    .mfa-info {
+      padding: 14px; background: #f8fafc;
+      border-radius: 10px; margin-bottom: 20px;
+      font-size: 13px; color: #374151; line-height: 1.5;
+    }
+    .mfa-code {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 10px;
+      font-size: 22px;
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.3em; text-align: center;
+      color: #0f172a; background: #fafafa;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .mfa-code:focus { border-color: #4567B7; box-shadow: 0 0 0 3px rgba(69,103,183,0.12); }
+    .mfa-code.has-error { border-color: #ef4444; }
+    .blockchain-ticker {
+      margin-top: 16px; padding: 12px 14px;
+      background: rgba(69,103,183,0.04);
+      border: 1px solid rgba(69,103,183,0.15);
+      border-radius: 10px; font-size: 12px;
+    }
+    .ticker-head { display: flex; align-items: center; gap: 6px; }
+    .ticker-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+    .ticker-dot.pending  { background: #f59e0b; }
+    .ticker-dot.recorded { background: #22c55e; animation: pulse 1.5s infinite; }
+    .ticker-lbl { color: #374151; font-weight: 600; font-size: 11px; letter-spacing: 0.05em; }
+    .ticker-hash-row { display: flex; gap: 6px; align-items: flex-start; margin: 6px 0 4px; flex-wrap: wrap; }
+    .ticker-hash { color: #6b7280; font-family: monospace; font-size: 11px; word-break: break-all; flex: 1; }
+    .ticker-meta { display: flex; gap: 16px; font-size: 11px; color: #6b7280; }
+    .ticker-meta strong { color: #374151; }
+    .success-icon {
+      width: 60px; height: 60px;
+      background: rgba(34,197,94,0.1);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px; font-size: 28px; color: #22c55e;
+    }
+    .success-cards { display: flex; gap: 12px; margin-bottom: 24px; }
+    .success-card  { flex: 1; padding: 14px; background: #f8fafc; border-radius: 10px; text-align: left; }
+    .sc-label { font-size: 10px; color: #9ca3af; font-weight: 600; letter-spacing: 0.06em; margin-bottom: 4px; }
+    .sc-value { font-size: 13px; font-weight: 600; color: #0f172a; }
+    .sc-value.mono { font-family: 'DM Mono', monospace; }
+    .jwt-row {
+      margin-top: 16px; padding: 10px 14px;
+      background: rgba(69,103,183,0.04);
+      border-radius: 8px;
+      display: flex; align-items: center; gap: 8px; justify-content: center;
+      font-size: 12px; color: #374151;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 20px;
+      font-size: 11px;
+    }
+    .footer-links a {
+      color: #9ca3af;
+      text-decoration: none;
+      transition: color 0.2s;
+      cursor: pointer;
+    }
+    .footer-links a:hover {
+      color: #4567B7;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- LEFT PANEL -->
+  <div id="left-panel">
+    <div class="left-orb"></div>
+    <div class="left-logo" onclick="window.location.href='home.html'">
+      <div class="left-logo-icon">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <path d="M14 2L4 6.5V13C4 18.5 8.4 23.7 14 25C19.6 23.7 24 18.5 24 13V6.5L14 2Z" fill="#4567B7"/>
+          <path d="M10 13.5L12.5 16L18 11" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <div class="logo-name">VISIOR</div>
+        <div class="logo-sub">SECURE CLINICAL TRIALS</div>
+      </div>
+    </div>
+    <div class="left-content">
+      <div class="left-badge">✦ ENTERPRISE SECURE ACCESS</div>
+      <h1 class="left-heading">Multi-Blockchain<br>Clinical Trials<br>Platform</h1>
+      <p class="left-body">Every login, data access, and trial event is cryptographically recorded on an immutable distributed ledger for complete auditability.</p>
+      <div class="left-features">
+        <div class="left-feature">
+          <span class="feature-icon">🔗</span>
+          <div>
+            <div class="feature-label">Hyperledger Fabric Integration</div>
+            <div class="feature-sub">VISIOR-channel-01</div>
+          </div>
+        </div>
+        <div class="left-feature">
+          <span class="feature-icon">🛡️</span>
+          <div>
+            <div class="feature-label">Zero-Trust Security Architecture</div>
+            <div class="feature-sub">Role-based access control</div>
+          </div>
+        </div>
+        <div class="left-feature">
+          <span class="feature-icon">🔐</span>
+          <div>
+            <div class="feature-label">Multi-Factor Authentication</div>
+            <div class="feature-sub">TOTP · SMS · FIDO2</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="left-footer">
+      <div class="footer-chain">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
+          <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
+        </svg>
+        All activity cryptographically recorded on blockchain
+      </div>
+      <div class="footer-meta">
+        <span>© 2025 VISIOR Health</span>
+        <span>v3.2.1</span>
+        <span><span class="status-dot"></span>All Systems Operational</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div id="right-panel">
+    <div id="right-header">
+      <button class="btn-home" onclick="window.location.href='home.html'">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        Home
+      </button>
+    </div>
+
+    <div id="right-main">
+      <!-- LOGIN STEP -->
+      <div id="step-login" class="step active">
+        <div class="card">
+          <div class="card-center">
+            <div class="card-title">🔐 Secure Access</div>
+            <div class="card-sub">Multi-factor authentication required</div>
+          </div>
+          <div class="error-banner" id="login-error">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span id="login-error-msg"></span>
+          </div>
+          <div class="field">
+            <label for="email">Email Address</label>
+            <div class="field-wrap">
+              <span class="field-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </span>
+              <input type="email" id="email" placeholder="you@institution.org" autocomplete="email" />
+            </div>
+            <div class="field-error" id="email-error">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span id="email-error-msg"></span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="password">Password</label>
+            <div class="field-wrap">
+              <span class="field-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>
+                </svg>
+              </span>
+              <input type="password" id="password" placeholder="••••••••••" autocomplete="current-password" />
+              <button class="field-right" id="toggle-pw" onclick="togglePassword()" type="button">
+                <svg id="eye-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/>
+                  <path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/>
+                  <line x1="1" y1="1" x2="23" y2="23"/>
+                </svg>
+              </button>
+            </div>
+            <div class="field-error" id="pw-error">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span id="pw-error-msg"></span>
+            </div>
+          </div>
+          <div class="row-between">
+            <label class="remember">
+              <input type="checkbox" id="remember" />
+              Remember this device
+            </label>
+            <button class="btn-link" onclick="window.location.href='forgot-password.html'">Forgot Password?</button>
+          </div>
+          <button class="btn-primary" id="login-btn" onclick="handleLogin()">LOGIN</button>
+          <div class="help-links">
+            <button onclick="window.location.href='help.html'">Need Help?</button>
+            <span>|</span>
+            <button onclick="window.location.href='register.html'">Create Account</button>
+          </div>
+        </div>
+        <div class="bottom-info">
+          <div class="chain-line">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
+              <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
+            </svg>
+            All login attempts are cryptographically recorded on blockchain.
+          </div>
+          <div class="meta-line">
+            <span id="last-login-time"></span>
+            <span>Device: Chrome / macOS</span>
+            <span><span class="dot-green"></span>Verified</span>
+          </div>
+        </div>
+        <div class="footer-links">
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+
+      <!-- MFA STEP -->
+      <div id="step-mfa" class="step">
+        <div class="card">
+          <button class="back-btn" onclick="goBack()">← Back</button>
+          <div style="text-align:center; margin-bottom:24px;">
+            <div class="mfa-icon">🔑</div>
+            <div class="card-title" style="font-size:20px;">Verify Your Identity</div>
+            <div class="card-sub">Choose a verification method to continue</div>
+            <div class="session-tag" id="session-display"></div>
+          </div>
+          <div class="mfa-methods">
+            <button class="mfa-btn selected" id="btn-totp" onclick="selectMfa('totp')">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+              </svg>
+              Auth App
+            </button>
+            <button class="mfa-btn" id="btn-sms" onclick="selectMfa('sms')">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
+              </svg>
+              SMS Code
+            </button>
+            <button class="mfa-btn" id="btn-fido2" onclick="selectMfa('fido2')">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 11-7.778 7.778 5.5 5.5 0 017.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>
+              </svg>
+              FIDO2 Key
+            </button>
+          </div>
+          <div class="mfa-info" id="mfa-info-text">
+            Open your authenticator app and enter the 6-digit code displayed for VISIOR.
+          </div>
+          <div class="error-banner" id="mfa-error">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span id="mfa-error-msg"></span>
+          </div>
+          <div id="code-field" style="margin-bottom:20px;">
+            <label style="display:block;font-size:12px;font-weight:600;color:#374151;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;">Verification Code</label>
+            <input type="text" class="mfa-code" id="mfa-code" placeholder="000000" maxlength="6" oninput="this.value=this.value.replace(/\D/g,'').slice(0,6)" />
+            <div class="field-error" id="code-error">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Enter the verification code.
+            </div>
+          </div>
+          <button class="btn-primary" id="verify-btn" onclick="handleMfa()">VERIFY & AUTHENTICATE</button>
+          <div class="blockchain-ticker">
+            <div class="ticker-head">
+              <span class="ticker-dot pending"></span>
+              <span class="ticker-lbl">AWAITING BLOCKCHAIN CONFIRMATION<span id="ticker-dots">.</span></span>
+            </div>
+          </div>
+          <div style="margin-top:16px;text-align:center;">
+            <button class="btn-link" style="font-size:12px;" onclick="window.location.href='help.html'">Resend Code</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUCCESS STEP -->
+      <div id="step-success" class="step">
+        <div class="card" style="text-align:center; padding:40px 36px;">
+          <div class="success-icon">✓</div>
+          <div class="card-title" style="margin-bottom:6px;">Authentication Successful</div>
+          <div class="card-sub" style="margin-bottom:28px;">Identity verified. Redirecting to VISIOR platform…</div>
+          <div class="success-cards">
+            <div class="success-card">
+              <div class="sc-label">SESSION ID</div>
+              <div class="sc-value mono" id="success-session"></div>
+            </div>
+            <div class="success-card">
+              <div class="sc-label">LOGIN TIME</div>
+              <div class="sc-value" id="success-time"></div>
+            </div>
+          </div>
+          <div class="blockchain-ticker" id="success-ticker" style="display:none; text-align:left;">
+            <div class="ticker-head" style="margin-bottom:8px;">
+              <span class="ticker-dot recorded"></span>
+              <span class="ticker-lbl">BLOCKCHAIN RECORDED</span>
+            </div>
+            <div class="ticker-hash-row">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2">
+                <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
+                <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
+              </svg>
+              <span class="ticker-hash" id="tx-hash"></span>
+            </div>
+            <div class="ticker-meta">
+              <span>Network: <strong id="tx-network"></strong></span>
+              <span>Time: <strong id="tx-time"></strong></span>
+            </div>
+          </div>
+          <div style="margin-top:24px;">
+            <button class="btn-primary" onclick="window.location.href='pi-dashboard.html'">PROCEED TO DASHBOARD →</button>
+          </div>
+          <div class="jwt-row">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+            JWT issued · Refresh token stored · Role-based access enabled
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentStep = 'login';
+  let userId = null;
+  let mfaMethod = 'totp';
+  let dotsInterval = null;
+  const loginTime = new Date();
+
+  document.getElementById('last-login-time').textContent =
+    'Last login: Today, ' + new Date(Date.now() - 3600000).toLocaleTimeString();
+
+  function showStep(step) {
+    document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+    document.getElementById('step-' + step).classList.add('active');
+    currentStep = step;
+  }
+
+  function goBack() {
+    clearDotsInterval();
+    showStep('login');
+  }
+
+  function togglePassword() {
+    const pw = document.getElementById('password');
+    const icon = document.getElementById('eye-icon');
+    if (pw.type === 'password') {
+      pw.type = 'text';
+      icon.innerHTML = `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`;
+    } else {
+      pw.type = 'password';
+      icon.innerHTML = `<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>`;
+    }
+  }
+
+  function selectMfa(method) {
+    mfaMethod = method;
+    ['totp','sms','fido2'].forEach(m => {
+      document.getElementById('btn-' + m).classList.toggle('selected', m === method);
+    });
+    const infoMap = {
+      totp:  'Open your authenticator app and enter the 6-digit code displayed for VISIOR.',
+      sms:   'An SMS has been sent to your registered mobile number ending in ••••89.',
+      fido2: 'Insert your FIDO2 security key and press the hardware button when prompted.',
+    };
+    document.getElementById('mfa-info-text').textContent = infoMap[method];
+    document.getElementById('code-field').style.display = method === 'fido2' ? 'none' : 'block';
+  }
+
+  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+  function showError(bannerId, msgId, msg) {
+    document.getElementById(bannerId).classList.toggle('visible', !!msg);
+    if (msgId) document.getElementById(msgId).textContent = msg || '';
+  }
+
+  function fieldError(inputId, errId, msgId, msg) {
+    const inp = document.getElementById(inputId);
+    const err = document.getElementById(errId);
+    if (msg) {
+      inp && inp.classList.add('has-error');
+      err && err.classList.add('visible');
+      msgId && (document.getElementById(msgId).textContent = msg);
+    } else {
+      inp && inp.classList.remove('has-error');
+      err && err.classList.remove('visible');
+    }
+  }
+
+  function setLoading(btnId, loading, label) {
+    const btn = document.getElementById(btnId);
+    btn.disabled = loading;
+    btn.innerHTML = loading
+      ? `<span class="spinner"></span> Authenticating…`
+      : label;
+  }
+
+  function startDots() {
+    let count = 1;
+    const el = document.getElementById('ticker-dots');
+    clearDotsInterval();
+    dotsInterval = setInterval(() => {
+      count = count >= 3 ? 1 : count + 1;
+      el.textContent = '.'.repeat(count);
+    }, 500);
+  }
+  
+  function clearDotsInterval() {
+    if (dotsInterval) { clearInterval(dotsInterval); dotsInterval = null; }
+  }
+
+  async function apiLogin(email, password) {
+    await sleep(1600);
+    if (!email.includes('@')) throw new Error('Invalid credentials.');
+    if (password.length < 6) throw new Error('Invalid credentials.');
+    return { userId: 'USR-' + Math.floor(Math.random() * 9999) };
+  }
+
+  async function apiVerifyMfa(code) {
+    await sleep(1400);
+    if (code === '000000') throw new Error('Verification failed. Try again.');
+    return {
+      txHash: '0x' + Array.from({length:64}, () => '0123456789abcdef'[Math.floor(Math.random()*16)]).join(''),
+      blockchainNetwork: 'Hyperledger Fabric',
+      timestamp: new Date().toISOString(),
+    };
+  }
+
+  async function handleLogin() {
+    const email    = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    let valid = true;
+
+    if (!email) {
+      fieldError('email','email-error','email-error-msg','Email is required.'); valid = false;
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      fieldError('email','email-error','email-error-msg','Enter a valid email address.'); valid = false;
+    } else {
+      fieldError('email','email-error','email-error-msg','');
+    }
+
+    if (!password) {
+      fieldError('password','pw-error','pw-error-msg','Password is required.'); valid = false;
+    } else if (password.length < 6) {
+      fieldError('password','pw-error','pw-error-msg','Password must be at least 6 characters.'); valid = false;
+    } else {
+      fieldError('password','pw-error','pw-error-msg','');
+    }
+
+    if (!valid) return;
+
+    showError('login-error','login-error-msg','');
+    setLoading('login-btn', true);
+
+    try {
+      const res = await apiLogin(email, password);
+      userId = res.userId;
+      document.getElementById('session-display').textContent = 'Session: ' + userId;
+      document.getElementById('success-session').textContent = userId;
+      document.getElementById('success-time').textContent = loginTime.toLocaleTimeString();
+      showStep('mfa');
+      startDots();
+    } catch (err) {
+      showError('login-error','login-error-msg', err.message);
+    } finally {
+      setLoading('login-btn', false, 'LOGIN');
+    }
+  }
+
+  async function handleMfa() {
+    const code = document.getElementById('mfa-code').value;
+    if (mfaMethod !== 'fido2' && (!code || code.length < 4)) {
+      document.getElementById('code-error').classList.add('visible');
+      document.getElementById('mfa-code').classList.add('has-error');
+      return;
+    }
+    document.getElementById('code-error').classList.remove('visible');
+    document.getElementById('mfa-code').classList.remove('has-error');
+    showError('mfa-error','mfa-error-msg','');
+    setLoading('verify-btn', true);
+
+    try {
+      const res = await apiVerifyMfa(code);
+      clearDotsInterval();
+      await sleep(600);
+      document.getElementById('tx-hash').textContent    = res.txHash;
+      document.getElementById('tx-network').textContent = res.blockchainNetwork;
+      document.getElementById('tx-time').textContent    = new Date(res.timestamp).toLocaleTimeString();
+      document.getElementById('success-ticker').style.display = 'block';
+      showStep('success');
+    } catch (err) {
+      showError('mfa-error','mfa-error-msg', err.message);
+    } finally {
+      setLoading('verify-btn', false, 'VERIFY & AUTHENTICATE');
+    }
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    if (currentStep === 'login') handleLogin();
+    if (currentStep === 'mfa')   handleMfa();
+  });
+</script>
+</body>
+</html>
