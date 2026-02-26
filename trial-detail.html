@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>VISIOR — Trial Detail: NCT-2024-0088</title>
+<title>VISIOR — Trial Detail</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet"/>
@@ -53,94 +53,7 @@
 <body>
 <div id="root"></div>
 <script type="text/babel">
-const { useState, useEffect, useRef, useCallback } = React;
-
-const TRIAL_DATA = {
-  id: "NCT-2024-0088",
-  title: "CRISPR-Cas9 Therapeutic Targeting in Sickle Cell Disease — Long-Term Outcomes and Safety Profile",
-  status: "Analysis",
-  phase: "Phase II",
-  posted: "2025-09-03",
-  lastUpdated: new Date(Date.now() - 120000),
-  sponsor: "Global Genomics Consortium (GGC) / Bill & Melinda Gates Foundation",
-  disease: "Sickle Cell Disease",
-  drug: "CRISPR-Cas9 CTX001 (Exagamglogene Autotemcel)",
-  blockchain: "ethereum",
-  txHash: "0x7a3f9c8b2e1d4f6a9c0e3b5d8f2a7c4e6b9d0f3a5c8e1b4d7f0a2c5e8b1d4f7a",
-  contractAddress: "0xA1b2C3d4E5f6G7h8I9j0K1l2M3n4O5p6Q7r8S9t0",
-  blockNumber: null,
-  channel: null,
-  networkName: "Ethereum Mainnet",
-  dataHash: "sha256:8f14e45fceea167a5a36dedd4bea2543",
-  lastVerified: new Date(Date.now() - 8000),
-  connected: true,
-  researcher: {
-    name: "Prof. Leila Nazari",
-    title: "Principal Investigator",
-    institution: "Johns Hopkins Bloomberg School of Public Health",
-    department: "Department of Molecular Genetics & Genomic Medicine",
-    email: "l.nazari@jhu.edu",
-  },
-  summary: "This Phase II adaptive clinical trial evaluates the long-term efficacy and safety of CRISPR-Cas9 gene-editing therapy (CTX001) in adult patients with severe sickle cell disease. The study employs a single-arm open-label design with patients receiving a one-time infusion following haematopoietic stem cell collection and myeloablative conditioning. Primary endpoints include total haemoglobin levels, fetal haemoglobin induction, and vaso-occlusive crisis frequency at 12, 24, and 36 months post-infusion.",
-  results: {
-    totalPatients: 620,
-    treatmentEffectiveness: 87,
-    placeboEffectiveness: 11,
-    primaryOutcomes: [
-      "87% of patients achieved fetal haemoglobin (HbF) levels above 20% at 12 months",
-      "94% freedom from severe vaso-occlusive crises at 24 months",
-      "Mean total haemoglobin increased from 8.5 g/dL to 12.1 g/dL",
-      "Transfusion independence achieved in 91% of patients at 18 months",
-    ],
-    sideEffects: [
-      "Neutropenia (Grade 3–4): 68%",
-      "Thrombocytopenia: 52%",
-      "Nausea/Vomiting: 44%",
-      "Fatigue: 38%",
-    ],
-    adverseEvents: [
-      "Serious adverse events in 14.2% of participants",
-      "No treatment-related fatalities reported",
-      "One case of delayed engraftment resolved without sequelae",
-    ],
-  },
-  eligibility: {
-    inclusion: [
-      "Adults aged 18–45 years with confirmed HbSS or HbSβ⁰ genotype",
-      "≥2 severe vaso-occlusive crises per year in last 24 months",
-      "Adequate organ function (renal, hepatic, cardiac)",
-      "No prior allogeneic haematopoietic stem cell transplant",
-      "ECOG performance status 0–1",
-    ],
-    exclusion: [
-      "Active or uncontrolled infection at time of enrolment",
-      "Prior gene therapy or gene-editing exposure",
-      "Active malignancy within 5 years",
-      "Pregnancy or breastfeeding",
-      "Known hypersensitivity to conditioning agents",
-    ],
-  },
-  documents: [
-    { name: "Study Protocol v3.2",      type: "PDF", size: "2.4 MB", hash: "sha256:a3f9c..." },
-    { name: "Results Summary Report",   type: "PDF", size: "1.1 MB", hash: "sha256:b7e2d..." },
-    { name: "Plain Language Summary",   type: "PDF", size: "0.6 MB", hash: "sha256:c9a1b..." },
-    { name: "Patient Information Sheet",type: "PDF", size: "0.8 MB", hash: "sha256:d4f8e..." },
-  ],
-};
-
-function timeAgo(d) {
-  const s = Math.floor((Date.now() - d) / 1000);
-  if (s < 60) return `${s}s ago`;
-  if (s < 3600) return `${Math.floor(s/60)}m ago`;
-  return `${Math.floor(s/3600)}h ago`;
-}
-function fmtDate(str) {
-  return new Date(str).toLocaleDateString("en-GB", { day:"numeric", month:"long", year:"numeric" });
-}
-function trunc(h, n=10) {
-  if (!h) return "—";
-  return h.slice(0,n) + "…" + h.slice(-8);
-}
+const { useState, useEffect } = React;
 
 function ShieldLogo({ size=34 }) {
   return (
@@ -196,9 +109,9 @@ function StatusBadge({ status }) {
 }
 
 function ContactModal({ researcher, onClose }) {
-  const [form, setForm]   = useState({ name:"", email:"", subject:"", message:"" });
+  const [form, setForm] = useState({ name:"", email:"", subject:"", message:"" });
   const [sending, setSending] = useState(false);
-  const [sent, setSent]   = useState(false);
+  const [sent, setSent] = useState(false);
 
   const handleSend = async (e) => {
     e.preventDefault();
@@ -223,7 +136,7 @@ function ContactModal({ researcher, onClose }) {
         <div style={{ background:"linear-gradient(100deg,#0F1A2E,#1E3A6E)", padding:"20px 28px", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
           <div>
             <div style={{ color:"white", fontWeight:700, fontSize:15 }}>Contact Researcher</div>
-            <div style={{ color:"rgba(255,255,255,0.5)", fontSize:11, marginTop:2 }}>{researcher.name} · {researcher.institution}</div>
+            <div style={{ color:"rgba(255,255,255,0.5)", fontSize:11, marginTop:2 }}>{researcher?.name} · {researcher?.institution}</div>
           </div>
           <button onClick={onClose} style={{ background:"rgba(255,255,255,0.1)", border:"none", borderRadius:8, width:32, height:32, cursor:"pointer", color:"white", fontSize:18, display:"flex", alignItems:"center", justifyContent:"center" }}>×</button>
         </div>
@@ -233,21 +146,16 @@ function ContactModal({ researcher, onClose }) {
             <div style={{ fontSize:44, marginBottom:14 }}>✅</div>
             <div style={{ fontSize:16, fontWeight:700, color:"#1A2840", marginBottom:8 }}>Message Sent Successfully</div>
             <div style={{ fontSize:12, color:"#8FA0BA", lineHeight:1.7 }}>
-              Your message has been delivered to {researcher.name}.<br/>
-              A hash of this message has been logged to the blockchain.
+              Your message has been delivered.
             </div>
-            <div style={{ margin:"20px auto 0", background:"#F4F7FC", borderRadius:10, padding:"12px 16px", width:"fit-content" }}>
-              <div style={{ fontSize:9, color:"#8FA0BA", fontWeight:700, letterSpacing:0.8, textTransform:"uppercase", marginBottom:4 }}>Blockchain Log Hash</div>
-              <div style={{ fontSize:11, color:"#4567B7", fontFamily:"monospace", fontWeight:600 }}>sha256:7f3a9c…e4b2d1</div>
-            </div>
-            <button onClick={onClose} style={{ marginTop:24, padding:"9px 28px", borderRadius:9, background:"#4567B7", color:"white", border:"none", fontWeight:600, fontSize:13, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>Close</button>
+            <button onClick={onClose} style={{ marginTop:24, padding:"9px 28px", borderRadius:9, background:"#4567B7", color:"white", border:"none", fontWeight:600, fontSize:13, cursor:"pointer" }}>Close</button>
           </div>
         ) : (
           <form onSubmit={handleSend} style={{ padding:"24px 28px" }}>
             {[
               { label:"Your Name",  key:"name",    type:"text",  placeholder:"Full name" },
               { label:"Your Email", key:"email",   type:"email", placeholder:"you@institution.edu" },
-              { label:"Subject",    key:"subject", type:"text",  placeholder:"Regarding trial NCT-2024-0088…" },
+              { label:"Subject",    key:"subject", type:"text",  placeholder:"Regarding trial..." },
             ].map(f => (
               <div key={f.key} style={{ marginBottom:16 }}>
                 <label style={{ display:"block", fontSize:11, fontWeight:700, color:"#6B82A8", letterSpacing:0.6, textTransform:"uppercase", marginBottom:6 }}>{f.label}</label>
@@ -256,8 +164,6 @@ function ContactModal({ researcher, onClose }) {
                   onChange={e => setForm({...form, [f.key]: e.target.value})}
                   placeholder={f.placeholder}
                   style={{ width:"100%", padding:"10px 14px", border:"1.5px solid #DDE8F5", borderRadius:9, fontSize:13, color:"#1A2840", outline:"none", fontFamily:"'DM Sans',sans-serif", background:"#F9FBFF" }}
-                  onFocus={e => e.target.style.borderColor="#4567B7"}
-                  onBlur={e  => e.target.style.borderColor="#DDE8F5"}
                 />
               </div>
             ))}
@@ -268,15 +174,13 @@ function ContactModal({ researcher, onClose }) {
                 onChange={e => setForm({...form, message: e.target.value})}
                 placeholder="Your message to the research team…"
                 style={{ width:"100%", padding:"10px 14px", border:"1.5px solid #DDE8F5", borderRadius:9, fontSize:13, color:"#1A2840", outline:"none", fontFamily:"'DM Sans',sans-serif", background:"#F9FBFF", resize:"vertical" }}
-                onFocus={e => e.target.style.borderColor="#4567B7"}
-                onBlur={e  => e.target.style.borderColor="#DDE8F5"}
               />
             </div>
             <div style={{ display:"flex", gap:10 }}>
-              <button type="submit" disabled={sending} style={{ flex:1, padding:"11px", borderRadius:9, background:"#4567B7", color:"white", border:"none", fontWeight:600, fontSize:13, cursor: sending?"default":"pointer", fontFamily:"'DM Sans',sans-serif", display:"flex", alignItems:"center", justifyContent:"center", gap:8, opacity: sending?0.8:1, boxShadow:"0 2px 10px rgba(69,103,183,0.28)" }}>
+              <button type="submit" disabled={sending} style={{ flex:1, padding:"11px", borderRadius:9, background:"#4567B7", color:"white", border:"none", fontWeight:600, fontSize:13, cursor: sending?"default":"pointer", display:"flex", alignItems:"center", justifyContent:"center", gap:8 }}>
                 {sending ? <><Spinner color="white" size={13}/> Sending…</> : "Send Message"}
               </button>
-              <button type="button" onClick={onClose} style={{ padding:"11px 20px", borderRadius:9, background:"white", border:"1.5px solid #DDE8F5", color:"#6B82A8", fontWeight:600, fontSize:13, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>Cancel</button>
+              <button type="button" onClick={onClose} style={{ padding:"11px 20px", borderRadius:9, background:"white", border:"1.5px solid #DDE8F5", color:"#6B82A8", fontWeight:600, fontSize:13, cursor:"pointer" }}>Cancel</button>
             </div>
           </form>
         )}
@@ -286,9 +190,9 @@ function ContactModal({ researcher, onClose }) {
 }
 
 function AccessModal({ trialId, onClose }) {
-  const [step, setStep]       = useState(1);
+  const [step, setStep] = useState(1);
   const [submitting, setSubmitting] = useState(false);
-  const [form, setForm]       = useState({ name:"", email:"", institution:"", role:"", reason:"" });
+  const [form, setForm] = useState({ name:"", email:"", institution:"", role:"", reason:"" });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -314,7 +218,7 @@ function AccessModal({ trialId, onClose }) {
         <div style={{ background:"linear-gradient(100deg,#0F1A2E,#1E3A6E)", padding:"20px 28px", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
           <div>
             <div style={{ color:"white", fontWeight:700, fontSize:15 }}>Request Full Access</div>
-            <div style={{ color:"rgba(255,255,255,0.5)", fontSize:11, marginTop:2 }}>Trial {trialId} · Patient-Level Data</div>
+            <div style={{ color:"rgba(255,255,255,0.5)", fontSize:11, marginTop:2 }}>Trial {trialId}</div>
           </div>
           <button onClick={onClose} style={{ background:"rgba(255,255,255,0.1)", border:"none", borderRadius:8, width:32, height:32, cursor:"pointer", color:"white", fontSize:18, display:"flex", alignItems:"center", justifyContent:"center" }}>×</button>
         </div>
@@ -323,17 +227,11 @@ function AccessModal({ trialId, onClose }) {
           <div style={{ padding:"48px 28px", textAlign:"center" }}>
             <div style={{ fontSize:44, marginBottom:14 }}>🔐</div>
             <div style={{ fontSize:16, fontWeight:700, color:"#1A2840", marginBottom:8 }}>Redirecting to Request Form...</div>
-            <div style={{ fontSize:12, color:"#8FA0BA", lineHeight:1.7, maxWidth:360, margin:"0 auto" }}>
-              Please complete the detailed access request form.
-            </div>
           </div>
         ) : (
           <form onSubmit={handleSubmit} style={{ padding:"24px 28px" }}>
-            <div style={{ background:"#FFF7E6", border:"1px solid #FFE0A0", borderRadius:9, padding:"12px 16px", marginBottom:20, display:"flex", gap:10 }}>
-              <span style={{ fontSize:16, marginTop:1 }}>⚠️</span>
-              <p style={{ fontSize:12, color:"#8B6000", lineHeight:1.65, margin:0 }}>
-                You'll be redirected to the detailed access request form.
-              </p>
+            <div style={{ background:"#FFF7E6", border:"1px solid #FFE0A0", borderRadius:9, padding:"12px 16px", marginBottom:20 }}>
+              <p style={{ fontSize:12, color:"#8B6000", margin:0 }}>You'll be redirected to the detailed access request form.</p>
             </div>
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14, marginBottom:14 }}>
               {[
@@ -348,9 +246,7 @@ function AccessModal({ trialId, onClose }) {
                     type={f.type} value={form[f.key]} required
                     onChange={e => setForm({...form, [f.key]: e.target.value})}
                     placeholder={f.placeholder}
-                    style={{ width:"100%", padding:"9px 13px", border:"1.5px solid #DDE8F5", borderRadius:8, fontSize:12, color:"#1A2840", outline:"none", fontFamily:"'DM Sans',sans-serif", background:"#F9FBFF" }}
-                    onFocus={e => e.target.style.borderColor="#4567B7"}
-                    onBlur={e  => e.target.style.borderColor="#DDE8F5"}
+                    style={{ width:"100%", padding:"9px 13px", border:"1.5px solid #DDE8F5", borderRadius:8, fontSize:12, color:"#1A2840", outline:"none", background:"#F9FBFF" }}
                   />
                 </div>
               ))}
@@ -360,17 +256,15 @@ function AccessModal({ trialId, onClose }) {
               <textarea
                 value={form.reason} required rows={3}
                 onChange={e => setForm({...form, reason: e.target.value})}
-                placeholder="Describe your research purpose and how you intend to use the data…"
-                style={{ width:"100%", padding:"9px 13px", border:"1.5px solid #DDE8F5", borderRadius:8, fontSize:12, color:"#1A2840", outline:"none", fontFamily:"'DM Sans',sans-serif", background:"#F9FBFF", resize:"vertical" }}
-                onFocus={e => e.target.style.borderColor="#4567B7"}
-                onBlur={e  => e.target.style.borderColor="#DDE8F5"}
+                placeholder="Describe your research purpose..."
+                style={{ width:"100%", padding:"9px 13px", border:"1.5px solid #DDE8F5", borderRadius:8, fontSize:12, color:"#1A2840", outline:"none", background:"#F9FBFF", resize:"vertical" }}
               />
             </div>
             <div style={{ display:"flex", gap:10 }}>
-              <button type="submit" disabled={submitting} style={{ flex:1, padding:"11px", borderRadius:9, background:"#1A2840", color:"white", border:"none", fontWeight:600, fontSize:13, cursor: submitting?"default":"pointer", fontFamily:"'DM Sans',sans-serif", display:"flex", alignItems:"center", justifyContent:"center", gap:8, opacity: submitting?0.8:1 }}>
+              <button type="submit" disabled={submitting} style={{ flex:1, padding:"11px", borderRadius:9, background:"#1A2840", color:"white", border:"none", fontWeight:600, fontSize:13, cursor: submitting?"default":"pointer", display:"flex", alignItems:"center", justifyContent:"center", gap:8 }}>
                 {submitting ? <><Spinner color="white" size={13}/> Redirecting…</> : "Continue to Request Form"}
               </button>
-              <button type="button" onClick={onClose} style={{ padding:"11px 20px", borderRadius:9, background:"white", border:"1.5px solid #DDE8F5", color:"#6B82A8", fontWeight:600, fontSize:13, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>Cancel</button>
+              <button type="button" onClick={onClose} style={{ padding:"11px 20px", borderRadius:9, background:"white", border:"1.5px solid #DDE8F5", color:"#6B82A8", fontWeight:600, fontSize:13, cursor:"pointer" }}>Cancel</button>
             </div>
           </form>
         )}
@@ -380,14 +274,14 @@ function AccessModal({ trialId, onClose }) {
 }
 
 function BlockchainPanel({ trial }) {
-  const [ts, setTs]               = useState(timeAgo(trial.lastVerified));
+  const [ts, setTs] = useState(timeAgo(trial?.lastVerified));
   const [refreshing, setRefreshing] = useState(false);
   const [verifyLoading, setVerifyLoading] = useState(false);
 
   useEffect(() => {
-    const t = setInterval(() => setTs(timeAgo(trial.lastVerified)), 5000);
+    const t = setInterval(() => setTs(timeAgo(trial?.lastVerified)), 5000);
     return () => clearInterval(t);
-  }, [trial.lastVerified]);
+  }, [trial?.lastVerified]);
 
   const handleRefresh = async () => {
     setRefreshing(true);
@@ -402,7 +296,7 @@ function BlockchainPanel({ trial }) {
     window.open('https://etherscan.io', '_blank');
   };
 
-  const isEth = trial.blockchain === "ethereum";
+  const isEth = trial?.blockchain?.network === "ethereum";
 
   return (
     <div style={{ background:"white", borderRadius:14, border:"1px solid #E4ECF7", boxShadow:"0 2px 16px rgba(69,103,183,0.07)", overflow:"hidden" }}>
@@ -411,7 +305,6 @@ function BlockchainPanel({ trial }) {
           <div style={{ width:38, height:38, borderRadius:10, background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.12)", display:"flex", alignItems:"center", justifyContent:"center" }}>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
               <path d="M3 7L10 3L17 7V13L10 17L3 13V7Z" stroke="rgba(255,255,255,0.75)" strokeWidth="1.3" fill="none"/>
-              <path d="M10 3V17M3 7L17 13M17 7L3 13" stroke="rgba(255,255,255,0.2)" strokeWidth="0.8"/>
             </svg>
           </div>
           <div>
@@ -423,62 +316,37 @@ function BlockchainPanel({ trial }) {
         </div>
         <div style={{ display:"flex", alignItems:"center", gap:14 }}>
           <div style={{ display:"flex", alignItems:"center", gap:6 }}>
-            <LiveDot active={trial.connected} size={7}/>
-            <span style={{ fontSize:10, color: trial.connected ? "#3CB371" : "#bbb", fontWeight:700, letterSpacing:0.5 }}>
-              {trial.connected ? "CONNECTED" : "OFFLINE"}
+            <LiveDot active={trial?.connected} size={7}/>
+            <span style={{ fontSize:10, color: trial?.connected ? "#3CB371" : "#bbb", fontWeight:700 }}>
+              {trial?.connected ? "CONNECTED" : "OFFLINE"}
             </span>
           </div>
-          <button onClick={handleRefresh} style={{ background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.14)", borderRadius:7, padding:"6px 12px", cursor:"pointer", fontSize:11, color:"rgba(255,255,255,0.7)", fontWeight:600, display:"flex", alignItems:"center", gap:5, fontFamily:"'DM Sans',sans-serif" }}>
+          <button onClick={handleRefresh} style={{ background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.14)", borderRadius:7, padding:"6px 12px", cursor:"pointer", fontSize:11, color:"rgba(255,255,255,0.7)", fontWeight:600, display:"flex", alignItems:"center", gap:5 }}>
             {refreshing ? <Spinner color="white" size={11}/> : "↻"} Refresh
           </button>
         </div>
       </div>
 
       <div style={{ padding:"22px 24px" }}>
-        <div style={{ background:"linear-gradient(100deg,#EDF3FC,#F7FAFF)", border:"1px solid #D5E2F8", borderRadius:10, padding:"14px 18px", marginBottom:20, display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:10 }}>
+        <div style={{ background:"linear-gradient(100deg,#EDF3FC,#F7FAFF)", border:"1px solid #D5E2F8", borderRadius:10, padding:"14px 18px", marginBottom:20 }}>
           <div>
-            <div style={{ fontSize:9, color:"#8FA0BA", fontWeight:700, letterSpacing:0.9, textTransform:"uppercase", marginBottom:4 }}>Data Integrity Hash (SHA-256)</div>
-            <div style={{ fontSize:12, fontFamily:"monospace", color:"#2C4E9E", fontWeight:600, wordBreak:"break-all" }}>{trial.dataHash}</div>
+            <div style={{ fontSize:9, color:"#8FA0BA", fontWeight:700, letterSpacing:0.9, textTransform:"uppercase", marginBottom:4 }}>Data Integrity Hash</div>
+            <div style={{ fontSize:12, fontFamily:"monospace", color:"#2C4E9E", fontWeight:600, wordBreak:"break-all" }}>{trial?.blockchain?.txHash || 'Pending'}</div>
           </div>
-          <span style={{ background:"#EBF0FA", color:"#2C4E9E", fontSize:10, fontWeight:700, padding:"4px 10px", borderRadius:6, letterSpacing:0.6, textTransform:"uppercase", whiteSpace:"nowrap" }}>✓ Verified</span>
         </div>
 
         <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12, marginBottom:20 }}>
-          {isEth ? (<>
-            <ChainKv label="Transaction Hash"  value={trunc(trial.txHash, 12)} mono/>
-            <ChainKv label="Smart Contract"    value={trunc(trial.contractAddress, 12)} mono/>
-            <ChainKv label="Network"           value={trial.networkName}/>
-            <ChainKv label="Blockchain Type"   value="Ethereum (EVM)"/>
-          </>) : (<>
-            <ChainKv label="Channel Name"      value={trial.channel}/>
-            <ChainKv label="Block Number"      value={`#${trial.blockNumber?.toLocaleString()}`}/>
-            <ChainKv label="Chaincode"         value="VISIOR-trials-cc"/>
-            <ChainKv label="Blockchain Type"   value="Hyperledger Fabric"/>
-          </>)}
-          <ChainKv label="Last Verified"       value={ts}/>
-          <ChainKv label="Auto-Refresh"        value="Every 5 seconds" accent/>
+          <ChainKv label="Network" value={trial?.blockchain?.network || 'Unknown'}/>
+          <ChainKv label="Last Verified" value={ts}/>
         </div>
 
-        <div style={{ background:"#F4F7FC", borderRadius:8, padding:"10px 14px", marginBottom:18, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-          <div style={{ display:"flex", alignItems:"center", gap:7 }}>
-            <span style={{ fontSize:10, color:"#4567B7", animation:"blink 2s infinite", display:"inline-block" }}>●</span>
-            <span style={{ fontSize:11, color:"#4567B7", fontWeight:600 }}>Live Verification Active</span>
-          </div>
-          <span style={{ fontSize:10, color:"#99AECA", fontFamily:"monospace" }}>
-            {new Date().toISOString().replace("T"," ").slice(0,19)} UTC
-          </span>
-        </div>
-
-        <div style={{ display:"flex", gap:10, flexWrap:"wrap" }}>
-          <button onClick={handleVerify} style={{ flex:1, padding:"10px 18px", borderRadius:9, background:"linear-gradient(135deg,#4567B7,#2C4E9E)", color:"white", border:"none", fontWeight:600, fontSize:12, cursor:"pointer", fontFamily:"'DM Sans',sans-serif", display:"flex", alignItems:"center", justifyContent:"center", gap:7, boxShadow:"0 2px 10px rgba(69,103,183,0.28)", transition:"all 0.18s" }}
-            onMouseEnter={e => e.currentTarget.style.boxShadow="0 5px 20px rgba(69,103,183,0.42)"}
-            onMouseLeave={e => e.currentTarget.style.boxShadow="0 2px 10px rgba(69,103,183,0.28)"}
-          >
-            {verifyLoading ? <Spinner color="white" size={13}/> : "🔍"} Verify on Explorer
+        <div style={{ display:"flex", gap:10 }}>
+          <button onClick={handleVerify} style={{ flex:1, padding:"10px 18px", borderRadius:9, background:"linear-gradient(135deg,#4567B7,#2C4E9E)", color:"white", border:"none", fontWeight:600, fontSize:12, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", gap:7 }}>
+            {verifyLoading ? <Spinner color="white" size={13}/> : "🔍 Verify on Explorer"}
           </button>
           <div style={{ flex:1, padding:"10px 18px", borderRadius:9, background:"#EAF6EA", border:"1px solid #B8E0C0", display:"flex", alignItems:"center", justifyContent:"center", gap:7 }}>
             <LiveDot active size={7}/>
-            <span style={{ fontSize:12, color:"#256825", fontWeight:600 }}>Verified — {ts}</span>
+            <span style={{ fontSize:12, color:"#256825", fontWeight:600 }}>Verified</span>
           </div>
         </div>
       </div>
@@ -486,11 +354,11 @@ function BlockchainPanel({ trial }) {
   );
 }
 
-function ChainKv({ label, value, mono, accent }) {
+function ChainKv({ label, value }) {
   return (
     <div style={{ background:"#F7FAFF", borderRadius:9, padding:"11px 13px", border:"1px solid #EDF2FB" }}>
       <div style={{ fontSize:9, color:"#8FA0BA", fontWeight:700, letterSpacing:0.7, textTransform:"uppercase", marginBottom:4 }}>{label}</div>
-      <div style={{ fontSize:12, color: accent ? "#4567B7" : "#1A2840", fontWeight: mono ? 500 : 600, fontFamily: mono ? "monospace" : "inherit", wordBreak:"break-all" }}>{value || "—"}</div>
+      <div style={{ fontSize:12, color:"#1A2840", fontWeight:600, wordBreak:"break-all" }}>{value || "—"}</div>
     </div>
   );
 }
@@ -516,8 +384,8 @@ function ResultsBar({ label, value, color, delay }) {
 
 function DocRow({ doc }) {
   const [downloading, setDownloading] = useState(false);
-  const [done, setDone]               = useState(false);
-  const [hov, setHov]                 = useState(false);
+  const [done, setDone] = useState(false);
+  const [hov, setHov] = useState(false);
 
   const handleDownload = async () => {
     setDownloading(true);
@@ -525,7 +393,7 @@ function DocRow({ doc }) {
     setDownloading(false);
     setDone(true);
     setTimeout(() => setDone(false), 3000);
-    alert(`Downloading ${doc.name}`);
+    alert(`Downloading ${doc?.name}`);
   };
 
   return (
@@ -538,38 +406,95 @@ function DocRow({ doc }) {
         <div style={{ width:38, height:38, borderRadius:9, background:"#EBF0FA", border:"1px solid #D5E2F8", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
             <rect x="3" y="2" width="12" height="14" rx="2" stroke="#4567B7" strokeWidth="1.3"/>
-            <path d="M6 6H12M6 9H12M6 12H9" stroke="#4567B7" strokeWidth="1.2" strokeLinecap="round"/>
           </svg>
         </div>
         <div>
-          <div style={{ fontSize:13, fontWeight:600, color:"#1A2840" }}>{doc.name}</div>
-          <div style={{ fontSize:10, color:"#8FA0BA", marginTop:2 }}>{doc.type} · {doc.size} · Hash: {trunc(doc.hash, 10)}</div>
+          <div style={{ fontSize:13, fontWeight:600, color:"#1A2840" }}>{doc?.name}</div>
+          <div style={{ fontSize:10, color:"#8FA0BA", marginTop:2 }}>{doc?.type} · {doc?.size}</div>
         </div>
       </div>
-      <button onClick={handleDownload} style={{ padding:"7px 16px", borderRadius:8, border:"1.5px solid #BFCFE8", background:"white", fontSize:11, fontWeight:600, color: done ? "#256825" : "#4567B7", cursor: downloading ? "default" : "pointer", display:"flex", alignItems:"center", gap:6, transition:"all 0.18s", fontFamily:"'DM Sans',sans-serif" }}
-        onMouseEnter={e => { if(!downloading && !done) e.currentTarget.style.background="#F0F5FF"; }}
-        onMouseLeave={e => e.currentTarget.style.background="white"}
-      >
+      <button onClick={handleDownload} style={{ padding:"7px 16px", borderRadius:8, border:"1.5px solid #BFCFE8", background:"white", fontSize:11, fontWeight:600, color: done ? "#256825" : "#4567B7", cursor: downloading ? "default" : "pointer", display:"flex", alignItems:"center", gap:6 }}>
         {downloading ? <><Spinner color="#4567B7" size={11}/> Verifying…</> : done ? "✓ Downloaded" : "⬇ Download"}
       </button>
     </div>
   );
 }
 
+function timeAgo(d) {
+  if (!d) return 'Unknown';
+  const s = Math.floor((Date.now() - new Date(d)) / 1000);
+  if (s < 60) return `${s}s ago`;
+  if (s < 3600) return `${Math.floor(s/60)}m ago`;
+  return `${Math.floor(s/3600)}h ago`;
+}
+
+function fmtDate(str) {
+  if (!str) return 'Unknown';
+  return new Date(str).toLocaleDateString("en-GB", { day:"numeric", month:"long", year:"numeric" });
+}
+
 function App() {
-  const [trial, setTrial]     = useState(null);
+  const [trial, setTrial] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [scrolled, setScrolled] = useState(false);
   const [showContact, setShowContact] = useState(false);
-  const [showAccess, setShowAccess]   = useState(false);
-  const [liveTs, setLiveTs]   = useState(new Date());
+  const [showAccess, setShowAccess] = useState(false);
+  const [liveTs, setLiveTs] = useState(new Date());
 
   useEffect(() => {
-    setTimeout(() => { setTrial(TRIAL_DATA); setLoading(false); }, 1000);
-    const poll   = setInterval(() => setTrial(p => p ? {...p, lastVerified: new Date()} : p), 8000);
-    const clock  = setInterval(() => setLiveTs(new Date()), 1000);
-    return () => { clearInterval(poll); clearInterval(clock); };
+    const params = new URLSearchParams(window.location.search);
+    const nctId = params.get('id') || 'NCT04280705'; // This one definitely work
+    console.log('Trial ID from URL:', nctId);
+    
+    if (nctId) {
+      fetchTrialDetails(nctId);
+    } else {
+      setError('No trial ID provided');
+      setLoading(false);
+    }
   }, []);
+
+  const fetchTrialDetails = async (nctId) => {
+  setLoading(true);
+  setError(null);
+  try {
+    console.log('Fetching trial:', nctId);
+    const response = await fetch(`http://localhost:3001/api/studies/${nctId}`);
+    
+    if (response.status === 404) {
+      throw new Error(`Trial ID "${nctId}" not found in clinicaltrials.gov`);
+    }
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    console.log('Received data:', data);
+    setTrial(data);
+  } catch (error) {
+    console.error('Error fetching trial:', error);
+    setError(`Unable to load trial data: ${error.message}`);
+  } finally {
+    setLoading(false);
+  }
+};
+
+  useEffect(() => {
+    const poll = setInterval(() => {
+      if (trial) {
+        setTrial(prev => prev ? {...prev, lastVerified: new Date()} : prev);
+      }
+    }, 8000);
+    
+    const clock = setInterval(() => setLiveTs(new Date()), 1000);
+    
+    return () => {
+      clearInterval(poll);
+      clearInterval(clock);
+    };
+  }, [trial]);
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 20);
@@ -581,12 +506,47 @@ function App() {
     <div style={{ height:h, width:w, borderRadius:6, marginBottom:mb, background:"linear-gradient(90deg,#f0f4fb 25%,#e4ecf8 50%,#f0f4fb 75%)", backgroundSize:"200% 100%", animation:"shimmer 1.6s infinite" }}/>
   );
 
+  if (error) {
+    return (
+      <div style={{ minHeight:"100vh", display:"flex", alignItems:"center", justifyContent:"center", flexDirection:"column", gap:20 }}>
+        <div style={{ fontSize:48 }}>⚠️</div>
+        <h2 style={{ color:"#1A2840" }}>{error}</h2>
+        <button onClick={() => window.location.reload()} style={{ padding:"12px 24px", background:"#4567B7", color:"white", border:"none", borderRadius:8, cursor:"pointer" }}>
+          Try Again
+        </button>
+        <a href="home.html" style={{ color:"#4567B7" }}>← Back to Home</a>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div style={{ minHeight:"100vh", width:"100%", background:"#F2F6FC" }}>
+        <nav style={{ position:"fixed", top:0, left:0, right:0, zIndex:200, background:"white", borderBottom:"1px solid #EDF2FB", padding:"0 40px", height:66, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+          <ShieldLogo size={32}/>
+          <div>Loading...</div>
+        </nav>
+        <main style={{ maxWidth:1440, margin:"0 auto", padding:"100px 40px" }}>
+          <SkeletonBlock h={30} w="60%" mb={20}/>
+          <SkeletonBlock h={200} w="100%" mb={20}/>
+          <SkeletonBlock h={150} w="100%"/>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div style={{ minHeight:"100vh", width:"100%", background:"#F2F6FC" }}>
-
-      <nav style={{ position:"fixed", top:0, left:0, right:0, zIndex:200, background: scrolled ? "rgba(255,255,255,0.97)" : "white", backdropFilter: scrolled ? "blur(14px)" : "none", borderBottom:`1px solid ${scrolled ? "#DDE8F5" : "#EDF2FB"}`, boxShadow: scrolled ? "0 2px 24px rgba(69,103,183,0.10)" : "none", transition:"all 0.3s ease" }}>
+      {/* Header */}
+      <nav style={{
+        position:"fixed", top:0, left:0, right:0, zIndex:200,
+        background: scrolled ? "rgba(255,255,255,0.97)" : "white",
+        backdropFilter: scrolled ? "blur(14px)" : "none",
+        borderBottom:`1px solid ${scrolled ? "#DDE8F5" : "#EDF2FB"}`,
+        boxShadow: scrolled ? "0 2px 24px rgba(69,103,183,0.10)" : "none",
+        transition:"all 0.3s ease",
+      }}>
         <div style={{ maxWidth:1440, margin:"0 auto", padding:"0 40px", height:66, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-
           <a href="home.html" style={{ display:"flex", alignItems:"center", gap:12, textDecoration:"none" }}>
             <ShieldLogo size={32}/>
             <div>
@@ -605,287 +565,237 @@ function App() {
           </div>
 
           <div style={{ display:"flex", gap:10 }}>
-            <a href="login.html" style={{ padding:"8px 20px", borderRadius:9, border:"1.5px solid #D0DCF0", fontSize:13, fontWeight:600, color:"#4567B7", textDecoration:"none", background:"white", display:"inline-flex", alignItems:"center", transition:"all 0.18s" }}
-              onMouseEnter={e=>{ e.target.style.background="#F0F5FF"; e.target.style.borderColor="#4567B7"; }}
-              onMouseLeave={e=>{ e.target.style.background="white"; e.target.style.borderColor="#D0DCF0"; }}
-            >Sign In</a>
-            <a href="register.html" style={{ padding:"8px 20px", borderRadius:9, border:"none", fontSize:13, fontWeight:600, color:"white", textDecoration:"none", background:"linear-gradient(135deg,#4567B7,#2C4E9E)", display:"inline-flex", alignItems:"center", boxShadow:"0 2px 10px rgba(69,103,183,0.3)", transition:"all 0.2s" }}
-              onMouseEnter={e=>{ e.target.style.boxShadow="0 5px 18px rgba(69,103,183,0.48)"; e.target.style.transform="translateY(-1px)"; }}
-              onMouseLeave={e=>{ e.target.style.boxShadow="0 2px 10px rgba(69,103,183,0.3)"; e.target.style.transform="translateY(0)"; }}
-            >Register</a>
+            <a href="login.html" style={{ padding:"8px 20px", borderRadius:9, border:"1.5px solid #D0DCF0", fontSize:13, fontWeight:600, color:"#4567B7", textDecoration:"none", background:"white" }}>Sign In</a>
+            <a href="register.html" style={{ padding:"8px 20px", borderRadius:9, border:"none", fontSize:13, fontWeight:600, color:"white", textDecoration:"none", background:"linear-gradient(135deg,#4567B7,#2C4E9E)" }}>Register</a>
           </div>
         </div>
       </nav>
 
+      {/* Breadcrumb */}
       <div style={{ paddingTop:66, background:"white", borderBottom:"1px solid #EDF2FB" }}>
-        <div style={{ maxWidth:1440, margin:"0 auto", padding:"12px 40px", display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:10 }}>
+        <div style={{ maxWidth:1440, margin:"0 auto", padding:"12px 40px", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
           <div style={{ display:"flex", alignItems:"center", gap:8, fontSize:12, color:"#8FA0BA" }}>
             <a href="home.html" style={{ color:"#4567B7", textDecoration:"none", fontWeight:600 }}>VISIOR</a>
             <span>›</span>
             <a href="home.html" style={{ color:"#8FA0BA", textDecoration:"none" }}>Search Results</a>
             <span>›</span>
-            <span style={{ color:"#1A2840", fontWeight:600 }}>{loading ? "Loading…" : trial?.id}</span>
+            <span style={{ color:"#1A2840", fontWeight:600 }}>{trial?.id}</span>
           </div>
-          <a href="home.html" style={{ display:"flex", alignItems:"center", gap:6, fontSize:12, fontWeight:600, color:"#4567B7", textDecoration:"none", padding:"6px 14px", border:"1.5px solid #D5E2F8", borderRadius:8, background:"#F7FAFF", transition:"all 0.18s" }}
-            onMouseEnter={e => e.currentTarget.style.background="#EBF0FA"}
-            onMouseLeave={e => e.currentTarget.style.background="#F7FAFF"}
-          >← Back to Search Results</a>
+          <a href="home.html" style={{ display:"flex", alignItems:"center", gap:6, fontSize:12, fontWeight:600, color:"#4567B7", textDecoration:"none", padding:"6px 14px", border:"1.5px solid #D5E2F8", borderRadius:8, background:"#F7FAFF" }}>← Back to Search Results</a>
         </div>
       </div>
 
+      {/* Public View Banner */}
       <div style={{ background:"linear-gradient(100deg,#4567B7,#2C4E9E)", padding:"11px 40px" }}>
         <div style={{ maxWidth:1440, margin:"0 auto", display:"flex", alignItems:"center", gap:10 }}>
           <span style={{ fontSize:14 }}>🔓</span>
           <p style={{ fontSize:12, color:"rgba(255,255,255,0.9)", fontWeight:500 }}>
             <strong style={{ color:"white" }}>Public View — </strong>
-            You are viewing publicly available blockchain-verified information. Log in to access patient-level data and statistical analyses.
+            You are viewing publicly available blockchain-verified information.
           </p>
         </div>
       </div>
 
+      {/* Main Content */}
       <main style={{ maxWidth:1440, margin:"0 auto", padding:"36px 40px 100px" }}>
-
-        {loading ? (
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 380px", gap:28 }}>
-            <div style={{ display:"flex", flexDirection:"column", gap:22 }}>
-              {[1,2,3].map(i => (
-                <div key={i} className="card" style={{ padding:"28px" }}>
-                  <SkeletonBlock h={10} w="30%" mb={18}/>
-                  <SkeletonBlock h={26} w="80%" mb={12}/>
-                  <SkeletonBlock h={13} w="60%" mb={8}/>
-                  <SkeletonBlock h={13} w="45%"/>
-                </div>
-              ))}
-            </div>
-            <div style={{ display:"flex", flexDirection:"column", gap:22 }}>
-              {[1,2].map(i => (
-                <div key={i} className="card" style={{ padding:"24px", height:180 }}>
-                  <SkeletonBlock h={10} w="40%" mb={18}/>
-                  <SkeletonBlock h={20} w="70%" mb={10}/>
-                  <SkeletonBlock h={13} w="90%"/>
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 400px", gap:28, alignItems:"start" }}>
-
-            <div style={{ display:"flex", flexDirection:"column", gap:22 }}>
-
-              <div className="card" style={{ padding:"28px 32px", animation:"fadeUp 0.4s ease" }}>
-                <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:18, flexWrap:"wrap" }}>
-                  <StatusBadge status={trial.status}/>
-                  <span style={{ background:"#F4F7FC", color:"#4567B7", borderRadius:6, fontSize:10, fontWeight:700, letterSpacing:0.8, padding:"4px 10px", textTransform:"uppercase", border:"1px solid #D5E2F8" }}>{trial.phase}</span>
-                  <span style={{ background:"#F4F7FC", color:"#6B82A8", borderRadius:6, fontSize:10, fontWeight:700, letterSpacing:0.8, padding:"4px 10px", textTransform:"uppercase", border:"1px solid #E4ECF7" }}>{trial.id}</span>
-                  <div style={{ marginLeft:"auto", display:"flex", alignItems:"center", gap:5 }}>
-                    <LiveDot active size={6}/>
-                    <span style={{ fontSize:10, color:"#3CB371", fontWeight:700, letterSpacing:0.5 }}>LIVE DATA</span>
-                  </div>
-                </div>
-
-                <h1 style={{ fontSize:"clamp(18px,2.2vw,26px)", fontWeight:800, color:"#1A2840", lineHeight:1.35, marginBottom:18, fontFamily:"'Sora',sans-serif", letterSpacing:-0.5 }}>
-                  {trial.title}
-                </h1>
-
-                <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:12 }}>
-                  {[
-                    { l:"Posted",       v: fmtDate(trial.posted) },
-                    { l:"Last Updated", v: timeAgo(trial.lastUpdated) },
-                    { l:"Disease Area", v: trial.disease },
-                    { l:"Intervention", v: trial.drug },
-                  ].map(m => (
-                    <div key={m.l} style={{ background:"#F7FAFF", borderRadius:9, padding:"10px 12px", border:"1px solid #EDF2FB" }}>
-                      <div style={{ fontSize:9, color:"#8FA0BA", fontWeight:700, letterSpacing:0.7, textTransform:"uppercase", marginBottom:3 }}>{m.l}</div>
-                      <div style={{ fontSize:12, fontWeight:600, color:"#1A2840", lineHeight:1.4 }}>{m.v}</div>
-                    </div>
-                  ))}
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 400px", gap:28, alignItems:"start" }}>
+          {/* Left Column */}
+          <div style={{ display:"flex", flexDirection:"column", gap:22 }}>
+            {/* Title Card */}
+            <div className="card" style={{ padding:"28px 32px" }}>
+              <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:18, flexWrap:"wrap" }}>
+                <StatusBadge status={trial?.status}/>
+                <span style={{ background:"#F4F7FC", color:"#4567B7", borderRadius:6, fontSize:10, fontWeight:700, letterSpacing:0.8, padding:"4px 10px", textTransform:"uppercase", border:"1px solid #D5E2F8" }}>{trial?.phase}</span>
+                <span style={{ background:"#F4F7FC", color:"#6B82A8", borderRadius:6, fontSize:10, fontWeight:700, letterSpacing:0.8, padding:"4px 10px", textTransform:"uppercase", border:"1px solid #E4ECF7" }}>{trial?.id}</span>
+                <div style={{ marginLeft:"auto", display:"flex", alignItems:"center", gap:5 }}>
+                  <LiveDot active size={6}/>
+                  <span style={{ fontSize:10, color:"#3CB371", fontWeight:700 }}>LIVE DATA</span>
                 </div>
               </div>
 
-              <div className="card" style={{ padding:"26px 28px", animation:"fadeUp 0.4s ease 0.07s both" }}>
-                <div className="section-label">📄 Study Summary</div>
-                <p style={{ fontSize:13.5, color:"#3A5070", lineHeight:1.8, margin:0 }}>{trial.summary}</p>
+              <h1 style={{ fontSize:"clamp(18px,2.2vw,26px)", fontWeight:800, color:"#1A2840", lineHeight:1.35, marginBottom:18, fontFamily:"'Sora',sans-serif", letterSpacing:-0.5 }}>
+                {trial?.title}
+              </h1>
+
+              <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:12 }}>
+                {[
+                  { l:"Posted",       v: fmtDate(trial?.posted) },
+                  { l:"Last Updated", v: timeAgo(trial?.lastUpdated) },
+                  { l:"Disease Area", v: trial?.disease },
+                  { l:"Intervention", v: trial?.drug },
+                ].map(m => (
+                  <div key={m.l} style={{ background:"#F7FAFF", borderRadius:9, padding:"10px 12px", border:"1px solid #EDF2FB" }}>
+                    <div style={{ fontSize:9, color:"#8FA0BA", fontWeight:700, letterSpacing:0.7, textTransform:"uppercase", marginBottom:3 }}>{m.l}</div>
+                    <div style={{ fontSize:12, fontWeight:600, color:"#1A2840", lineHeight:1.4 }}>{m.v}</div>
+                  </div>
+                ))}
               </div>
-
-              <div className="card" style={{ padding:"26px 28px", animation:"fadeUp 0.4s ease 0.11s both" }}>
-                <div className="section-label">📊 Key Results</div>
-
-                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:20, marginBottom:24 }}>
-                  <div style={{ background:"linear-gradient(135deg,#EAF6EA,#F0FBF0)", borderRadius:12, padding:"18px 20px", border:"1px solid #C8E8CC" }}>
-                    <div style={{ fontSize:10, color:"#256825", fontWeight:700, letterSpacing:0.8, textTransform:"uppercase", marginBottom:6 }}>Treatment Group</div>
-                    <div style={{ fontSize:40, fontWeight:800, color:"#256825", fontFamily:"'Sora',sans-serif", lineHeight:1 }}>{trial.results.treatmentEffectiveness}%</div>
-                    <div style={{ fontSize:11, color:"#3CB371", marginTop:6, fontWeight:500 }}>Effectiveness rate</div>
-                  </div>
-                  <div style={{ background:"linear-gradient(135deg,#F7F4FB,#F0ECFB)", borderRadius:12, padding:"18px 20px", border:"1px solid #D5C8EC" }}>
-                    <div style={{ fontSize:10, color:"#6B4FCF", fontWeight:700, letterSpacing:0.8, textTransform:"uppercase", marginBottom:6 }}>Placebo Group</div>
-                    <div style={{ fontSize:40, fontWeight:800, color:"#6B4FCF", fontFamily:"'Sora',sans-serif", lineHeight:1 }}>{trial.results.placeboEffectiveness}%</div>
-                    <div style={{ fontSize:11, color:"#9B7FDF", marginTop:6, fontWeight:500 }}>Effectiveness rate</div>
-                  </div>
-                </div>
-
-                <ResultsBar label="Treatment Effectiveness" value={trial.results.treatmentEffectiveness} color="#3CB371" delay={0}/>
-                <ResultsBar label="Placebo Effectiveness"   value={trial.results.placeboEffectiveness}   color="#9B7FDF" delay={150}/>
-
-                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:18, marginTop:22 }}>
-                  <div>
-                    <div style={{ fontSize:10, color:"#8FA0BA", fontWeight:700, letterSpacing:0.8, textTransform:"uppercase", marginBottom:12 }}>Primary Outcomes</div>
-                    {trial.results.primaryOutcomes.map((o,i) => (
-                      <div key={i} style={{ display:"flex", gap:8, alignItems:"flex-start", marginBottom:10 }}>
-                        <span style={{ width:16, height:16, borderRadius:"50%", background:"#EAF6EA", border:"1.5px solid #B8DFC0", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, marginTop:1 }}>
-                          <span style={{ fontSize:9, color:"#256825", fontWeight:700 }}>✓</span>
-                        </span>
-                        <span style={{ fontSize:12, color:"#3A5070", lineHeight:1.55 }}>{o}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div>
-                    <div style={{ fontSize:10, color:"#8FA0BA", fontWeight:700, letterSpacing:0.8, textTransform:"uppercase", marginBottom:12 }}>Side Effects Reported</div>
-                    {trial.results.sideEffects.map((s,i) => (
-                      <div key={i} style={{ display:"flex", gap:8, alignItems:"center", marginBottom:8 }}>
-                        <span style={{ width:6, height:6, borderRadius:"50%", background:"#D4A017", flexShrink:0 }}/>
-                        <span style={{ fontSize:12, color:"#3A5070" }}>{s}</span>
-                      </div>
-                    ))}
-                    <div style={{ fontSize:10, color:"#8FA0BA", fontWeight:700, letterSpacing:0.8, textTransform:"uppercase", marginBottom:10, marginTop:16 }}>Adverse Events</div>
-                    {trial.results.adverseEvents.map((a,i) => (
-                      <div key={i} style={{ display:"flex", gap:8, alignItems:"flex-start", marginBottom:7 }}>
-                        <span style={{ width:6, height:6, borderRadius:"50%", background:"#E05050", flexShrink:0, marginTop:5 }}/>
-                        <span style={{ fontSize:12, color:"#3A5070", lineHeight:1.5 }}>{a}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <div className="card" style={{ padding:"26px 28px", animation:"fadeUp 0.4s ease 0.14s both" }}>
-                <div className="section-label">📋 Eligibility Criteria</div>
-                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:20 }}>
-
-                  <div>
-                    <div style={{ display:"flex", alignItems:"center", gap:7, marginBottom:14 }}>
-                      <div style={{ width:20, height:20, borderRadius:6, background:"#EAF6EA", border:"1.5px solid #B8DFC0", display:"flex", alignItems:"center", justifyContent:"center" }}>
-                        <span style={{ fontSize:10, color:"#256825" }}>✓</span>
-                      </div>
-                      <span style={{ fontSize:11, fontWeight:700, color:"#256825", letterSpacing:0.5, textTransform:"uppercase" }}>Inclusion Criteria</span>
-                    </div>
-                    {trial.eligibility.inclusion.map((c,i) => (
-                      <div key={i} style={{ display:"flex", gap:9, alignItems:"flex-start", marginBottom:10 }}>
-                        <span style={{ fontSize:10, color:"#3CB371", fontWeight:700, marginTop:2, flexShrink:0 }}>{i+1}.</span>
-                        <span style={{ fontSize:12, color:"#3A5070", lineHeight:1.6 }}>{c}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div>
-                    <div style={{ display:"flex", alignItems:"center", gap:7, marginBottom:14 }}>
-                      <div style={{ width:20, height:20, borderRadius:6, background:"#FEF0F0", border:"1.5px solid #FACACA", display:"flex", alignItems:"center", justifyContent:"center" }}>
-                        <span style={{ fontSize:10, color:"#C0392B" }}>✕</span>
-                      </div>
-                      <span style={{ fontSize:11, fontWeight:700, color:"#C0392B", letterSpacing:0.5, textTransform:"uppercase" }}>Exclusion Criteria</span>
-                    </div>
-                    {trial.eligibility.exclusion.map((c,i) => (
-                      <div key={i} style={{ display:"flex", gap:9, alignItems:"flex-start", marginBottom:10 }}>
-                        <span style={{ fontSize:10, color:"#E05050", fontWeight:700, marginTop:2, flexShrink:0 }}>{i+1}.</span>
-                        <span style={{ fontSize:12, color:"#3A5070", lineHeight:1.6 }}>{c}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <div className="card" style={{ padding:"26px 28px", animation:"fadeUp 0.4s ease 0.17s both" }}>
-                <div className="section-label">📂 Public Documents</div>
-                <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
-                  {trial.documents.map((doc,i) => <DocRow key={i} doc={doc}/>)}
-                </div>
-              </div>
-
             </div>
 
-            <div style={{ display:"flex", flexDirection:"column", gap:22, position:"sticky", top:80 }}>
+            {/* Summary Card */}
+            <div className="card" style={{ padding:"26px 28px" }}>
+              <div className="section-label">📄 Study Summary</div>
+              <p style={{ fontSize:13.5, color:"#3A5070", lineHeight:1.8, margin:0 }}>{trial?.summary}</p>
+            </div>
 
-              <div className="card" style={{ padding:"22px 22px", animation:"fadeUp 0.4s ease 0.05s both", overflow:"hidden", position:"relative" }}>
-                <div style={{ position:"absolute", top:-30, right:-30, width:120, height:120, borderRadius:"50%", background:"radial-gradient(circle,rgba(69,103,183,0.06),transparent 70%)", pointerEvents:"none" }}/>
-                <div className="section-label">👩‍⚕️ Principal Investigator</div>
-                <div style={{ display:"flex", gap:14, alignItems:"flex-start", marginBottom:18 }}>
-                  <div style={{ width:52, height:52, borderRadius:14, background:"linear-gradient(135deg,#4567B7,#2C4E9E)", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
-                    <span style={{ color:"white", fontSize:18, fontWeight:700 }}>
-                      {trial.researcher.name.replace(/^(Dr\.|Prof\.)\s*/,"").split(" ").slice(0,2).map(w=>w[0]).join("")}
-                    </span>
-                  </div>
-                  <div>
-                    <div style={{ fontSize:14, fontWeight:700, color:"#1A2840" }}>{trial.researcher.name}</div>
-                    <div style={{ fontSize:11, color:"#4567B7", fontWeight:600, marginTop:2 }}>{trial.researcher.title}</div>
-                    <div style={{ fontSize:11, color:"#8FA0BA", marginTop:3, lineHeight:1.5 }}>{trial.researcher.institution}</div>
-                    <div style={{ fontSize:10, color:"#99AECA", marginTop:2 }}>{trial.researcher.department}</div>
-                  </div>
+            {/* Results Card */}
+            <div className="card" style={{ padding:"26px 28px" }}>
+              <div className="section-label">📊 Key Results</div>
+
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:20, marginBottom:24 }}>
+                <div style={{ background:"linear-gradient(135deg,#EAF6EA,#F0FBF0)", borderRadius:12, padding:"18px 20px", border:"1px solid #C8E8CC" }}>
+                  <div style={{ fontSize:10, color:"#256825", fontWeight:700, letterSpacing:0.8, textTransform:"uppercase", marginBottom:6 }}>Treatment Group</div>
+                  <div style={{ fontSize:40, fontWeight:800, color:"#256825", fontFamily:"'Sora',sans-serif", lineHeight:1 }}>{trial?.results?.treatmentEffectiveness || 0}%</div>
                 </div>
-                <button className="btn btn-outline" style={{width:"100%",padding:"9px 0",borderRadius:8,background:"transparent",border:"1.5px solid #BFCFE8",color:"#4567B7",fontSize:12,fontWeight:600,cursor:"pointer",fontFamily:"'DM Sans',sans-serif",display:"flex",alignItems:"center",justifyContent:"center",gap:7}} onClick={() => setShowContact(true)}>
-                  ✉ Contact Researcher
-                </button>
-              </div>
-
-              <div className="card" style={{ padding:"20px 22px", animation:"fadeUp 0.4s ease 0.08s both" }}>
-                <div className="section-label">🏢 Sponsor</div>
-                <p style={{ fontSize:13, fontWeight:600, color:"#1A2840", lineHeight:1.55 }}>{trial.sponsor}</p>
-              </div>
-
-              <div className="card" style={{ padding:"20px 22px", animation:"fadeUp 0.4s ease 0.10s both" }}>
-                <div className="section-label">👥 Trial Scale</div>
-                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
-                  {[
-                    { l:"Total Enrolled", v: trial.results.totalPatients.toLocaleString() },
-                    { l:"Phase",          v: trial.phase },
-                    { l:"Disease",        v: trial.disease },
-                    { l:"Status",         v: trial.status },
-                  ].map(m => (
-                    <div key={m.l} style={{ background:"#F7FAFF", borderRadius:8, padding:"10px 12px", border:"1px solid #EDF2FB" }}>
-                      <div style={{ fontSize:9, color:"#8FA0BA", fontWeight:700, letterSpacing:0.6, textTransform:"uppercase", marginBottom:3 }}>{m.l}</div>
-                      <div style={{ fontSize:13, fontWeight:700, color:"#1A2840" }}>{m.v}</div>
-                    </div>
-                  ))}
+                <div style={{ background:"linear-gradient(135deg,#F7F4FB,#F0ECFB)", borderRadius:12, padding:"18px 20px", border:"1px solid #D5C8EC" }}>
+                  <div style={{ fontSize:10, color:"#6B4FCF", fontWeight:700, letterSpacing:0.8, textTransform:"uppercase", marginBottom:6 }}>Placebo Group</div>
+                  <div style={{ fontSize:40, fontWeight:800, color:"#6B4FCF", fontFamily:"'Sora',sans-serif", lineHeight:1 }}>{trial?.results?.placeboEffectiveness || 0}%</div>
                 </div>
               </div>
 
-              <div style={{ animation:"fadeUp 0.4s ease 0.12s both" }}>
-                <BlockchainPanel trial={trial}/>
-              </div>
+              <ResultsBar label="Treatment Effectiveness" value={trial?.results?.treatmentEffectiveness || 0} color="#3CB371" delay={0}/>
+              <ResultsBar label="Placebo Effectiveness"   value={trial?.results?.placeboEffectiveness || 0}   color="#9B7FDF" delay={150}/>
 
-              <div className="card" style={{ padding:"22px 22px", animation:"fadeUp 0.4s ease 0.15s both", border:"1.5px solid #D5E2F8", background:"linear-gradient(135deg,#F7FAFF,#EDF3FC)" }}>
-                <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:14 }}>
-                  <div style={{ width:32, height:32, borderRadius:8, background:"#1A2840", display:"flex", alignItems:"center", justifyContent:"center" }}>
-                    <span style={{ fontSize:14 }}>🔐</span>
-                  </div>
-                  <div style={{ fontSize:13, fontWeight:700, color:"#1A2840" }}>Request Full Access</div>
-                </div>
-                <p style={{ fontSize:12, color:"#5A7090", lineHeight:1.7, marginBottom:18 }}>
-                  To access detailed patient-level data, statistical analyses, and raw datasets, authorized institutional access is required.
-                </p>
-                <div style={{ display:"flex", flexDirection:"column", gap:8, marginBottom:18 }}>
-                  {["Patient-level anonymised records","Full statistical analysis dataset","Raw genomic sequencing data","Supplementary appendices"].map(item => (
-                    <div key={item} style={{ display:"flex", gap:8, alignItems:"center" }}>
-                      <span style={{ width:14, height:14, borderRadius:"50%", background:"#EDF2FB", border:"1.5px solid #C8D8F0", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
-                        <span style={{ fontSize:8, color:"#4567B7" }}>→</span>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:18, marginTop:22 }}>
+                <div>
+                  <div style={{ fontSize:10, color:"#8FA0BA", fontWeight:700, letterSpacing:0.8, textTransform:"uppercase", marginBottom:12 }}>Primary Outcomes</div>
+                  {trial?.results?.primaryOutcomes?.map((o,i) => (
+                    <div key={i} style={{ display:"flex", gap:8, alignItems:"flex-start", marginBottom:10 }}>
+                      <span style={{ width:16, height:16, borderRadius:"50%", background:"#EAF6EA", border:"1.5px solid #B8DFC0", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, marginTop:1 }}>
+                        <span style={{ fontSize:9, color:"#256825", fontWeight:700 }}>✓</span>
                       </span>
-                      <span style={{ fontSize:11, color:"#5A7090" }}>{item}</span>
+                      <span style={{ fontSize:12, color:"#3A5070", lineHeight:1.55 }}>{o}</span>
                     </div>
-                  ))}
+                  )) || <p>No data available</p>}
                 </div>
-                <button
-                  onClick={() => setShowAccess(true)}
-                  style={{ width:"100%", padding:"12px", borderRadius:10, background:"linear-gradient(135deg,#1A2840,#253855)", color:"white", border:"none", fontWeight:700, fontSize:13, cursor:"pointer", fontFamily:"'DM Sans',sans-serif", display:"flex", alignItems:"center", justifyContent:"center", gap:8, boxShadow:"0 3px 14px rgba(26,40,64,0.28)", transition:"all 0.2s" }}
-                  onMouseEnter={e => { e.currentTarget.style.boxShadow="0 6px 22px rgba(26,40,64,0.4)"; e.currentTarget.style.transform="translateY(-1px)"; }}
-                  onMouseLeave={e => { e.currentTarget.style.boxShadow="0 3px 14px rgba(26,40,64,0.28)"; e.currentTarget.style.transform="translateY(0)"; }}
-                >
-                  🔐 REQUEST FULL ACCESS
-                </button>
-              </div>
 
+                <div>
+                  <div style={{ fontSize:10, color:"#8FA0BA", fontWeight:700, letterSpacing:0.8, textTransform:"uppercase", marginBottom:12 }}>Side Effects</div>
+                  {trial?.results?.sideEffects?.map((s,i) => (
+                    <div key={i} style={{ display:"flex", gap:8, alignItems:"center", marginBottom:8 }}>
+                      <span style={{ width:6, height:6, borderRadius:"50%", background:"#D4A017", flexShrink:0 }}/>
+                      <span style={{ fontSize:12, color:"#3A5070" }}>{s}</span>
+                    </div>
+                  )) || <p>No data available</p>}
+                </div>
+              </div>
+            </div>
+
+            {/* Eligibility Card */}
+            <div className="card" style={{ padding:"26px 28px" }}>
+              <div className="section-label">📋 Eligibility Criteria</div>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:20 }}>
+                <div>
+                  <div style={{ display:"flex", alignItems:"center", gap:7, marginBottom:14 }}>
+                    <div style={{ width:20, height:20, borderRadius:6, background:"#EAF6EA", border:"1.5px solid #B8DFC0", display:"flex", alignItems:"center", justifyContent:"center" }}>
+                      <span style={{ fontSize:10, color:"#256825" }}>✓</span>
+                    </div>
+                    <span style={{ fontSize:11, fontWeight:700, color:"#256825", letterSpacing:0.5, textTransform:"uppercase" }}>Inclusion</span>
+                  </div>
+                  {trial?.eligibility?.inclusion?.map((c,i) => (
+                    <div key={i} style={{ display:"flex", gap:9, alignItems:"flex-start", marginBottom:10 }}>
+                      <span style={{ fontSize:10, color:"#3CB371", fontWeight:700, marginTop:2, flexShrink:0 }}>{i+1}.</span>
+                      <span style={{ fontSize:12, color:"#3A5070", lineHeight:1.6 }}>{c}</span>
+                    </div>
+                  )) || <p>No criteria available</p>}
+                </div>
+
+                <div>
+                  <div style={{ display:"flex", alignItems:"center", gap:7, marginBottom:14 }}>
+                    <div style={{ width:20, height:20, borderRadius:6, background:"#FEF0F0", border:"1.5px solid #FACACA", display:"flex", alignItems:"center", justifyContent:"center" }}>
+                      <span style={{ fontSize:10, color:"#C0392B" }}>✕</span>
+                    </div>
+                    <span style={{ fontSize:11, fontWeight:700, color:"#C0392B", letterSpacing:0.5, textTransform:"uppercase" }}>Exclusion</span>
+                  </div>
+                  {trial?.eligibility?.exclusion?.map((c,i) => (
+                    <div key={i} style={{ display:"flex", gap:9, alignItems:"flex-start", marginBottom:10 }}>
+                      <span style={{ fontSize:10, color:"#E05050", fontWeight:700, marginTop:2, flexShrink:0 }}>{i+1}.</span>
+                      <span style={{ fontSize:12, color:"#3A5070", lineHeight:1.6 }}>{c}</span>
+                    </div>
+                  )) || <p>No criteria available</p>}
+                </div>
+              </div>
+            </div>
+
+            {/* Documents Card */}
+            <div className="card" style={{ padding:"26px 28px" }}>
+              <div className="section-label">📂 Public Documents</div>
+              <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+                {trial?.documents?.map((doc,i) => <DocRow key={i} doc={doc}/>) || <p>No documents available</p>}
+              </div>
             </div>
           </div>
-        )}
-        
+
+          {/* Right Column - Sticky */}
+          <div style={{ display:"flex", flexDirection:"column", gap:22, position:"sticky", top:80 }}>
+            {/* PI Card */}
+            <div className="card" style={{ padding:"22px 22px" }}>
+              <div className="section-label">👩‍⚕️ Principal Investigator</div>
+              <div style={{ display:"flex", gap:14, alignItems:"flex-start", marginBottom:18 }}>
+                <div style={{ width:52, height:52, borderRadius:14, background:"linear-gradient(135deg,#4567B7,#2C4E9E)", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+                  <span style={{ color:"white", fontSize:18, fontWeight:700 }}>
+                    {trial?.researcher?.name?.replace(/^(Dr\.|Prof\.)\s*/,"").split(" ").slice(0,2).map(w=>w[0]).join("") || 'PI'}
+                  </span>
+                </div>
+                <div>
+                  <div style={{ fontSize:14, fontWeight:700, color:"#1A2840" }}>{trial?.researcher?.name || 'Principal Investigator'}</div>
+                  <div style={{ fontSize:11, color:"#4567B7", fontWeight:600, marginTop:2 }}>{trial?.researcher?.title}</div>
+                  <div style={{ fontSize:11, color:"#8FA0BA", marginTop:3 }}>{trial?.researcher?.institution}</div>
+                </div>
+              </div>
+              <button onClick={() => setShowContact(true)} style={{ width:"100%", padding:"9px 0", borderRadius:8, border:"1.5px solid #BFCFE8", background:"transparent", color:"#4567B7", fontSize:12, fontWeight:600, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", gap:7 }}>
+                ✉ Contact Researcher
+              </button>
+            </div>
+
+            {/* Sponsor Card */}
+            <div className="card" style={{ padding:"20px 22px" }}>
+              <div className="section-label">🏢 Sponsor</div>
+              <p style={{ fontSize:13, fontWeight:600, color:"#1A2840", lineHeight:1.55 }}>{trial?.sponsor || 'Unknown'}</p>
+            </div>
+
+            {/* Trial Scale Card */}
+            <div className="card" style={{ padding:"20px 22px" }}>
+              <div className="section-label">👥 Trial Scale</div>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
+                {[
+                  { l:"Total Enrolled", v: trial?.results?.totalPatients?.toLocaleString() || 'Unknown' },
+                  { l:"Phase",          v: trial?.phase || 'Unknown' },
+                  { l:"Disease",        v: trial?.disease || 'Unknown' },
+                  { l:"Status",         v: trial?.status || 'Unknown' },
+                ].map(m => (
+                  <div key={m.l} style={{ background:"#F7FAFF", borderRadius:8, padding:"10px 12px", border:"1px solid #EDF2FB" }}>
+                    <div style={{ fontSize:9, color:"#8FA0BA", fontWeight:700, letterSpacing:0.6, textTransform:"uppercase", marginBottom:3 }}>{m.l}</div>
+                    <div style={{ fontSize:13, fontWeight:700, color:"#1A2840" }}>{m.v}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Blockchain Panel */}
+            <BlockchainPanel trial={trial}/>
+
+            {/* Request Access Card */}
+            <div className="card" style={{ padding:"22px 22px", border:"1.5px solid #D5E2F8", background:"linear-gradient(135deg,#F7FAFF,#EDF3FC)" }}>
+              <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:14 }}>
+                <div style={{ width:32, height:32, borderRadius:8, background:"#1A2840", display:"flex", alignItems:"center", justifyContent:"center" }}>
+                  <span style={{ fontSize:14 }}>🔐</span>
+                </div>
+                <div style={{ fontSize:13, fontWeight:700, color:"#1A2840" }}>Request Full Access</div>
+              </div>
+              <p style={{ fontSize:12, color:"#5A7090", lineHeight:1.7, marginBottom:18 }}>
+                To access detailed patient-level data, statistical analyses, and raw datasets.
+              </p>
+              <button
+                onClick={() => setShowAccess(true)}
+                style={{ width:"100%", padding:"12px", borderRadius:10, background:"linear-gradient(135deg,#1A2840,#253855)", color:"white", border:"none", fontWeight:700, fontSize:13, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", gap:8 }}
+              >
+                🔐 REQUEST FULL ACCESS
+              </button>
+            </div>
+          </div>
+        </div>
+
         {/* Footer Links */}
         <div className="footer-links">
           <a href="help.html">Help</a>
@@ -895,6 +805,7 @@ function App() {
         </div>
       </main>
 
+      {/* Footer */}
       <footer style={{ background:"#0C1624", padding:"52px 40px 32px", width:"100%" }}>
         <div style={{ maxWidth:1440, margin:"0 auto", display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:16 }}>
           <div style={{ display:"flex", alignItems:"center", gap:10 }}>
@@ -905,23 +816,19 @@ function App() {
           </div>
           <div style={{ display:"flex", gap:28 }}>
             <a href="home.html" style={{ fontSize:12, color:"rgba(255,255,255,0.4)", textDecoration:"none" }}>Home</a>
-            <a href="search.html" style={{ fontSize:12, color:"rgba(255,255,255,0.4)", textDecoration:"none" }}>Search</a>
-            <a href="about.html" style={{ fontSize:12, color:"rgba(255,255,255,0.4)", textDecoration:"none" }}>About</a>
             <a href="privacy.html" style={{ fontSize:12, color:"rgba(255,255,255,0.4)", textDecoration:"none" }}>Privacy</a>
             <a href="terms.html" style={{ fontSize:12, color:"rgba(255,255,255,0.4)", textDecoration:"none" }}>Terms</a>
             <a href="contact.html" style={{ fontSize:12, color:"rgba(255,255,255,0.4)", textDecoration:"none" }}>Contact</a>
           </div>
           <div style={{ display:"flex", alignItems:"center", gap:6 }}>
             <LiveDot active size={6}/>
-            <span style={{ fontSize:11, color:"rgba(255,255,255,0.3)" }}>
-              © 2026 VISIOR – Multi-Blockchain Clinical Trials Consortium
-            </span>
+            <span style={{ fontSize:11, color:"rgba(255,255,255,0.3)" }}>© 2026 VISIOR</span>
           </div>
         </div>
       </footer>
 
-      {showContact && <ContactModal researcher={trial.researcher} onClose={() => setShowContact(false)}/>}
-      {showAccess  && <AccessModal  trialId={trial.id}           onClose={() => setShowAccess(false)}/>}
+      {showContact && <ContactModal researcher={trial?.researcher} onClose={() => setShowContact(false)}/>}
+      {showAccess && <AccessModal trialId={trial?.id} onClose={() => setShowAccess(false)}/>}
     </div>
   );
 }

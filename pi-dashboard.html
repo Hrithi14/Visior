@@ -730,7 +730,7 @@
       <div class="chain-dot"></div>
       <span>Hyperledger Fabric · Block #148,204</span>
     </div>
-    <button class="profile-btn" onclick="toggleProfileMenu()">
+    <button class="profile-btn" onclick="window.location.href='profile.html'">
       <div class="profile-avatar">SS</div>
       Dr. Sarah Smith
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
@@ -798,7 +798,7 @@
           <div class="sae-sub">VISIOR-2024-003 · CARDIOPROTECT-II · Grade 3 Cardiac Event – Patient P0482 · Received 2 hours ago</div>
         </div>
       </div>
-      <button class="btn btn-danger" onclick="handleAction('report-sae','VISIOR-2024-003', this)">
+      <button class="btn btn-danger" onclick="window.location.href='report-sae.html?trial=VISIOR-2024-003'">
         <span class="spinner"></span>
         Report SAE
       </button>
@@ -852,13 +852,13 @@
         <button class="btn btn-primary" onclick="window.location.href='full-data.html?trial=VISIOR-2024-003'">
           <span class="spinner"></span>⚙️ Manage Trial
         </button>
-        <button class="btn btn-ghost" onclick="window.location.href='full-data.html?trial=VISIOR-2024-003'">
+        <button class="btn btn-ghost" onclick="window.location.href='add-patient.html'">
           <span class="spinner"></span>➕ Add Patient Data
         </button>
-        <button class="btn btn-danger" onclick="handleAction('report-sae','VISIOR-2024-003', this)">
+        <button class="btn btn-danger" onclick="window.location.href='report-sae.html?trial=VISIOR-2024-003'">
           <span class="spinner"></span>🚨 Report SAE
         </button>
-        <button class="btn btn-ghost" onclick="handleAction('progress','VISIOR-2024-003', this)">
+        <button class="btn btn-ghost" onclick="window.location.href='progress-view.html?trial=VISIOR-2024-003'">
           <span class="spinner"></span>📊 View Progress
         </button>
       </div>
@@ -904,9 +904,9 @@
       </div>
       <div class="trial-card-actions" onclick="event.stopPropagation()">
         <button class="btn btn-primary" onclick="window.location.href='full-data.html?trial=VISIOR-2024-011'">⚙️ Manage Trial</button>
-        <button class="btn btn-ghost" onclick="window.location.href='full-data.html?trial=VISIOR-2024-011'">➕ Add Patient Data</button>
-        <button class="btn btn-danger" onclick="handleAction('report-sae','VISIOR-2024-011', this)">🚨 Report SAE</button>
-        <button class="btn btn-ghost" onclick="handleAction('progress','VISIOR-2024-011', this)">📊 View Progress</button>
+        <button class="btn btn-ghost" onclick="window.location.href='add-patient.html'">➕ Add Patient Data</button>
+        <button class="btn btn-danger" onclick="window.location.href='report-sae.html?trial=VISIOR-2024-011'">🚨 Report SAE</button>
+        <button class="btn btn-ghost" onclick="window.location.href='progress-view.html?trial=VISIOR-2024-011'">📊 View Progress</button>
       </div>
     </div>
 
@@ -952,7 +952,7 @@
         <button class="btn btn-primary" onclick="window.location.href='full-data.html?trial=VISIOR-2022-044'">⚙️ Manage Trial</button>
         <button class="btn btn-ghost" onclick="window.location.href='full-data.html?trial=VISIOR-2022-044'">📂 View Full Data</button>
         <button class="btn btn-warn" onclick="window.location.href='voting.html'">📋 Review Requests</button>
-        <button class="btn btn-ghost" onclick="handleAction('audit-log','VISIOR-2022-044', this)">🔍 Audit Log</button>
+        <button class="btn btn-ghost" onclick="window.location.href='audit-log.html'">🔍 Audit Log</button>
       </div>
     </div>
 
@@ -1134,35 +1134,6 @@ function generateTxId() {
   return 'TX-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).substr(2,5).toUpperCase();
 }
 
-async function handleAction(action, trialId, btn) {
-  const spinner = btn.querySelector('.spinner');
-  btn.disabled = true;
-  if (spinner) spinner.style.display = 'inline-block';
-  await new Promise(r => setTimeout(r, 1200 + Math.random() * 800));
-  btn.disabled = false;
-  if (spinner) spinner.style.display = 'none';
-
-  const hash = generateHash();
-  const block = generateBlock();
-  const txId = generateTxId();
-
-  const labels = {
-    'manage': '⚙️ Trial Management Opened',
-    'add-patient': '➕ Patient Data Recorded',
-    'report-sae': '🚨 SAE Report Submitted',
-    'progress': '📊 Progress Report Loaded',
-    'view-data': '📂 Full Data Access Granted',
-    'review-requests': '📋 Requests Panel Opened',
-    'audit-log': '🔍 Audit Log Retrieved',
-  };
-
-  showToast(labels[action] || 'Action Completed', `Trial: ${trialId}`, hash, block, txId);
-  addChainEntry(labels[action] || 'Action', hash, block, trialId);
-
-  const el = document.getElementById('chain-txs');
-  el.textContent = (parseInt(el.textContent.replace(',','')) + 1).toLocaleString();
-}
-
 function showToast(title, msg, hash, block, txId) {
   const container = document.getElementById('toast-container');
   const toast = document.createElement('div');
@@ -1244,10 +1215,6 @@ function handleLogout(e) {
     showToast('🔒 Session Ended', 'Logout action recorded on blockchain', hash, generateBlock(), generateTxId());
     setTimeout(() => { window.location.href = 'login.html'; }, 2000);
   }
-}
-
-function toggleProfileMenu() {
-  window.location.href = 'profile.html';
 }
 
 simulateRealtime();

@@ -35,125 +35,93 @@ const { useState, useEffect, useRef, useCallback } = React;
 
 const MOCK_TRIALS = [
   {
-    id: "NCT-2024-0041",
-    title: "PHASE III EFFICACY OF REMDESIVIR IN POST-COVID PULMONARY FIBROSIS",
+    id: "NCT04280705",  // Real COVID trial
+    title: "Remdesivir in COVID-19 Patients",
     researcher: "Dr. Amara Osei-Bonsu",
-    institution: "Geneva Institute for Global Health",
-    status: "Recruiting",
-    posted: "2025-11-14",
-    patients: 1840,
-    duration: "36 months",
-    effectiveness: "Preliminary data shows 42% reduction in fibrotic progression markers at 12-month follow-up.",
-    ageRange: "30–70 yrs",
+    institution: "Geneva Institute",
+    status: "Completed",
+    posted: "2020-03-15",
+    patients: 1062,
+    duration: "6 months",
+    effectiveness: "Showed improved recovery time",
+    ageRange: "18-85 yrs",
     phase: "Phase III",
-    disease: "Pulmonary Fibrosis",
+    disease: "COVID-19",
     drug: "Remdesivir",
     blockchain: "hyperledger",
     channel: "trials-main",
     blockNumber: 48291,
-    txHash: null, contractAddress: null,
-    lastVerified: new Date(Date.now() - 18000), connected: true,
+    txHash: null,
+    contractAddress: null,
+    lastVerified: new Date(Date.now() - 18000),
+    connected: true,
   },
   {
-    id: "NCT-2024-0088",
-    title: "CRISPR-CAS9 THERAPEUTIC TARGETING IN SICKLE CELL DISEASE — LONG-TERM OUTCOMES",
+    id: "NCT04516746",  // Real CRISPR trial
+    title: "CRISPR-Cas9 for Sickle Cell Disease",
     researcher: "Prof. Leila Nazari",
-    institution: "Johns Hopkins Bloomberg School",
-    status: "Analysis",
-    posted: "2025-09-03",
-    patients: 620,
-    duration: "48 months",
-    effectiveness: "87% of patients achieved HbF levels >20%. No major adverse events reported at 36-month follow-up.",
-    ageRange: "18–45 yrs",
-    phase: "Phase II",
+    institution: "Johns Hopkins",
+    status: "Active",
+    posted: "2020-08-17",
+    patients: 45,
+    duration: "24 months",
+    effectiveness: "87% achieved HbF >20%",
+    ageRange: "18-45 yrs",
+    phase: "Phase I/II",
     disease: "Sickle Cell Disease",
-    drug: "CRISPR-Cas9 CTX001",
+    drug: "CTX001",
     blockchain: "ethereum",
-    channel: null, blockNumber: null,
+    channel: null,
+    blockNumber: null,
     txHash: "0x7a3f9c...e48b2d",
     contractAddress: "0xA1b2C3...F9e0D1",
-    lastVerified: new Date(Date.now() - 7000), connected: true,
+    lastVerified: new Date(Date.now() - 7000),
+    connected: true,
   },
   {
-    id: "NCT-2025-0012",
-    title: "ANTI-PD1 COMBINATION THERAPY IN TRIPLE-NEGATIVE BREAST CANCER",
+    id: "NCT04191148",  // Real cancer trial
+    title: "Pembrolizumab in Triple-Negative Breast Cancer",
     researcher: "Dr. Sven Lindqvist",
-    institution: "Karolinska Institutet, Stockholm",
-    status: "Completed",
-    posted: "2024-06-21",
-    patients: 3100,
+    institution: "Karolinska Institutet",
+    status: "Recruiting",
+    posted: "2019-12-09",
+    patients: 1174,
     duration: "60 months",
-    effectiveness: "Median OS improved by 14.3 months vs standard care. Overall response rate: 61%.",
-    ageRange: "25–65 yrs",
+    effectiveness: "Ongoing study",
+    ageRange: "18-80 yrs",
     phase: "Phase III",
     disease: "Breast Cancer",
-    drug: "Pembrolizumab + Chemotherapy",
+    drug: "Pembrolizumab",
     blockchain: "hyperledger",
     channel: "oncology-network",
     blockNumber: 91055,
-    txHash: null, contractAddress: null,
-    lastVerified: new Date(Date.now() - 45000), connected: true,
+    txHash: null,
+    contractAddress: null,
+    lastVerified: new Date(Date.now() - 45000),
+    connected: true,
   },
   {
-    id: "NCT-2025-0031",
-    title: "GLP-1 RECEPTOR AGONIST NEUROPROTECTION IN EARLY-ONSET PARKINSON'S DISEASE",
+    id: "NCT04278144",  // Real Parkinson's trial
+    title: "Semaglutide for Parkinson's Disease",
     researcher: "Dr. Fatima Al-Rashidi",
     institution: "King Abdullah Medical City",
     status: "Recruiting",
-    posted: "2026-01-08",
-    patients: 940,
-    duration: "24 months",
-    effectiveness: "Motor score stabilisation observed in 68% of treated cohort at 6-month interim analysis.",
-    ageRange: "40–65 yrs",
+    posted: "2020-02-19",
+    patients: 320,
+    duration: "36 months",
+    effectiveness: "Phase II interim analysis",
+    ageRange: "40-75 yrs",
     phase: "Phase II",
     disease: "Parkinson's Disease",
     drug: "Semaglutide",
     blockchain: "ethereum",
-    channel: null, blockNumber: null,
+    channel: null,
+    blockNumber: null,
     txHash: "0x3c1d8e...a99f0b",
     contractAddress: "0xD4e5F6...C7b8A9",
-    lastVerified: new Date(Date.now() - 3000), connected: true,
-  },
-  {
-    id: "NCT-2025-0055",
-    title: "mRNA VACCINE PLATFORM FOR DRUG-RESISTANT TUBERCULOSIS — ADAPTIVE TRIAL",
-    researcher: "Dr. Chinwe Okafor",
-    institution: "Africa Health Research Institute",
-    status: "Recruiting",
-    posted: "2026-02-01",
-    patients: 2200,
-    duration: "30 months",
-    effectiveness: "Interim data pending. Phase I showed robust immunogenicity with T-cell activation in 94% of participants.",
-    ageRange: "18–55 yrs",
-    phase: "Phase II",
-    disease: "Tuberculosis",
-    drug: "mRNA-TB Vaccine",
-    blockchain: "hyperledger",
-    channel: "vaccine-trials",
-    blockNumber: 12874,
-    txHash: null, contractAddress: null,
-    lastVerified: new Date(Date.now() - 2000), connected: true,
-  },
-  {
-    id: "NCT-2025-0067",
-    title: "ORAL FACTOR XI INHIBITOR IN ATRIAL FIBRILLATION STROKE PREVENTION",
-    researcher: "Prof. Hans-Peter Schulz",
-    institution: "Charité Universitätsmedizin Berlin",
-    status: "Analysis",
-    posted: "2025-07-15",
-    patients: 4850,
-    duration: "42 months",
-    effectiveness: "31% relative risk reduction in ischaemic stroke vs warfarin. Major bleeding events reduced by 44%.",
-    ageRange: "55–80 yrs",
-    phase: "Phase III",
-    disease: "Atrial Fibrillation",
-    drug: "Abelacimab",
-    blockchain: "ethereum",
-    channel: null, blockNumber: null,
-    txHash: "0x9f2e1a...c33d7f",
-    contractAddress: "0xE7f8G9...H1i2J3",
-    lastVerified: new Date(Date.now() - 11000), connected: true,
-  },
+    lastVerified: new Date(Date.now() - 3000),
+    connected: true,
+  }
 ];
 
 const STATUS_CFG = {
@@ -240,6 +208,31 @@ function StatusBadge({ status }) {
 }
 
 function ChainBadge({ chain }) {
+  const CHAIN_CFG = {
+    hyperledger: { label: "Hyperledger Fabric", short: "HLF", color: "#1A3C5E", bg: "#E6EEF5", accent: "#2C6FAC" },
+    ethereum:    { label: "Ethereum",           short: "ETH", color: "#3D2A8A", bg: "#EEE9FA", accent: "#6B4FCF" },
+  };
+  
+  // If chain is undefined or not found, return a default badge
+  if (!chain || !CHAIN_CFG[chain]) {
+    return (
+      <span style={{
+        display:"inline-flex", alignItems:"center", gap:5,
+        background:"#f1f5f9", color:"#64748b",
+        borderRadius:5, fontSize:10, fontWeight:700,
+        letterSpacing:0.7, padding:"3px 9px", textTransform:"uppercase",
+      }}>
+        <svg width="8" height="8" viewBox="0 0 8 8">
+          <rect x="0.5" y="0.5" width="3" height="3" rx="0.7" fill="#64748b" opacity="0.8"/>
+          <rect x="4.5" y="0.5" width="3" height="3" rx="0.7" fill="#64748b"/>
+          <rect x="0.5" y="4.5" width="3" height="3" rx="0.7" fill="#64748b"/>
+          <rect x="4.5" y="4.5" width="3" height="3" rx="0.7" fill="#64748b" opacity="0.8"/>
+        </svg>
+        CHAIN
+      </span>
+    );
+  }
+  
   const c = CHAIN_CFG[chain];
   return (
     <span style={{
@@ -258,7 +251,6 @@ function ChainBadge({ chain }) {
     </span>
   );
 }
-
 function TrialCard({ trial, idx }) {
   const [exp, setExp] = useState(false);
   const [ts, setTs] = useState(timeAgo(trial.lastVerified));
@@ -450,46 +442,180 @@ function App() {
   const [scrolled, setScrolled] = useState(false);
   const [focused, setFocused] = useState(false);
   const [chainFilter, setChainFilter] = useState("All");
+  const [error, setError] = useState(null);
   const debQuery = useDebounce(query, 300);
 
+  // MOCK TRIALS - keep as fallback
+  const MOCK_TRIALS = [
+    {
+      id: "NCT-2024-0041",
+      title: "PHASE III EFFICACY OF REMDESIVIR IN POST-COVID PULMONARY FIBROSIS",
+      researcher: "Dr. Amara Osei-Bonsu",
+      institution: "Geneva Institute for Global Health",
+      status: "Recruiting",
+      posted: "2025-11-14",
+      patients: 1840,
+      duration: "36 months",
+      effectiveness: "Preliminary data shows 42% reduction in fibrotic progression markers at 12-month follow-up.",
+      ageRange: "30–70 yrs",
+      phase: "Phase III",
+      disease: "Pulmonary Fibrosis",
+      drug: "Remdesivir",
+      blockchain: "hyperledger",
+      channel: "trials-main",
+      blockNumber: 48291,
+      txHash: null, contractAddress: null,
+      lastVerified: new Date(Date.now() - 18000), connected: true,
+    },
+    {
+      id: "NCT-2024-0088",
+      title: "CRISPR-CAS9 THERAPEUTIC TARGETING IN SICKLE CELL DISEASE — LONG-TERM OUTCOMES",
+      researcher: "Prof. Leila Nazari",
+      institution: "Johns Hopkins Bloomberg School",
+      status: "Analysis",
+      posted: "2025-09-03",
+      patients: 620,
+      duration: "48 months",
+      effectiveness: "87% of patients achieved HbF levels >20%. No major adverse events reported at 36-month follow-up.",
+      ageRange: "18–45 yrs",
+      phase: "Phase II",
+      disease: "Sickle Cell Disease",
+      drug: "CRISPR-Cas9 CTX001",
+      blockchain: "ethereum",
+      channel: null, blockNumber: null,
+      txHash: "0x7a3f9c...e48b2d",
+      contractAddress: "0xA1b2C3...F9e0D1",
+      lastVerified: new Date(Date.now() - 7000), connected: true,
+    },
+    {
+      id: "NCT-2025-0012",
+      title: "ANTI-PD1 COMBINATION THERAPY IN TRIPLE-NEGATIVE BREAST CANCER",
+      researcher: "Dr. Sven Lindqvist",
+      institution: "Karolinska Institutet, Stockholm",
+      status: "Completed",
+      posted: "2024-06-21",
+      patients: 3100,
+      duration: "60 months",
+      effectiveness: "Median OS improved by 14.3 months vs standard care. Overall response rate: 61%.",
+      ageRange: "25–65 yrs",
+      phase: "Phase III",
+      disease: "Breast Cancer",
+      drug: "Pembrolizumab + Chemotherapy",
+      blockchain: "hyperledger",
+      channel: "oncology-network",
+      blockNumber: 91055,
+      txHash: null, contractAddress: null,
+      lastVerified: new Date(Date.now() - 45000), connected: true,
+    },
+    {
+      id: "NCT-2025-0031",
+      title: "GLP-1 RECEPTOR AGONIST NEUROPROTECTION IN EARLY-ONSET PARKINSON'S DISEASE",
+      researcher: "Dr. Fatima Al-Rashidi",
+      institution: "King Abdullah Medical City",
+      status: "Recruiting",
+      posted: "2026-01-08",
+      patients: 940,
+      duration: "24 months",
+      effectiveness: "Motor score stabilisation observed in 68% of treated cohort at 6-month interim analysis.",
+      ageRange: "40–65 yrs",
+      phase: "Phase II",
+      disease: "Parkinson's Disease",
+      drug: "Semaglutide",
+      blockchain: "ethereum",
+      channel: null, blockNumber: null,
+      txHash: "0x3c1d8e...a99f0b",
+      contractAddress: "0xD4e5F6...C7b8A9",
+      lastVerified: new Date(Date.now() - 3000), connected: true,
+    },
+    {
+      id: "NCT-2025-0055",
+      title: "mRNA VACCINE PLATFORM FOR DRUG-RESISTANT TUBERCULOSIS — ADAPTIVE TRIAL",
+      researcher: "Dr. Chinwe Okafor",
+      institution: "Africa Health Research Institute",
+      status: "Recruiting",
+      posted: "2026-02-01",
+      patients: 2200,
+      duration: "30 months",
+      effectiveness: "Interim data pending. Phase I showed robust immunogenicity with T-cell activation in 94% of participants.",
+      ageRange: "18–55 yrs",
+      phase: "Phase II",
+      disease: "Tuberculosis",
+      drug: "mRNA-TB Vaccine",
+      blockchain: "hyperledger",
+      channel: "vaccine-trials",
+      blockNumber: 12874,
+      txHash: null, contractAddress: null,
+      lastVerified: new Date(Date.now() - 2000), connected: true,
+    },
+    {
+      id: "NCT-2025-0067",
+      title: "ORAL FACTOR XI INHIBITOR IN ATRIAL FIBRILLATION STROKE PREVENTION",
+      researcher: "Prof. Hans-Peter Schulz",
+      institution: "Charité Universitätsmedizin Berlin",
+      status: "Analysis",
+      posted: "2025-07-15",
+      patients: 4850,
+      duration: "42 months",
+      effectiveness: "31% relative risk reduction in ischaemic stroke vs warfarin. Major bleeding events reduced by 44%.",
+      ageRange: "55–80 yrs",
+      phase: "Phase III",
+      disease: "Atrial Fibrillation",
+      drug: "Abelacimab",
+      blockchain: "ethereum",
+      channel: null, blockNumber: null,
+      txHash: "0x9f2e1a...c33d7f",
+      contractAddress: "0xE7f8G9...H1i2J3",
+      lastVerified: new Date(Date.now() - 11000), connected: true,
+    },
+  ];
+
+  // Fetch trials from API
+  const fetchTrials = async (searchQuery = '') => {
+  setLoading(true);
+  setError(null);
+  try {
+    const url = new URL('http://localhost:3001/api/studies');
+    if (searchQuery) {
+      url.searchParams.append('query', searchQuery);
+    }
+    
+    const response = await fetch(url);
+    const data = await response.json();
+    setTrials(data.studies);
+  } catch (error) {
+    console.error('Error fetching trials:', error);
+    setError('Failed to load trials');
+    setTrials(MOCK_TRIALS); // fallback to mock data
+  } finally {
+    setLoading(false);
+  }
+};
+
+  // Initial fetch
   useEffect(() => {
-    setTimeout(() => { setTrials(MOCK_TRIALS); setLoading(false); }, 1200);
+    fetchTrials();
   }, []);
 
+  // Search on debounced query
   useEffect(() => {
-    if (!debQuery && chainFilter==="All") { setTrials(MOCK_TRIALS); return; }
-    setLoading(true);
-    const t = setTimeout(() => {
-      let r = MOCK_TRIALS;
-      if (debQuery) {
-        const q = debQuery.toLowerCase();
-        r = r.filter(t =>
-          t.title.toLowerCase().includes(q) ||
-          t.disease.toLowerCase().includes(q) ||
-          t.drug.toLowerCase().includes(q) ||
-          t.researcher.toLowerCase().includes(q) ||
-          t.phase.toLowerCase().includes(q) ||
-          t.status.toLowerCase().includes(q) ||
-          t.institution.toLowerCase().includes(q)
-        );
-      }
-      if (chainFilter !== "All") {
-        r = r.filter(t =>
-          (chainFilter==="Ethereum" && t.blockchain==="ethereum") ||
-          (chainFilter==="Hyperledger" && t.blockchain==="hyperledger")
-        );
-      }
-      setTrials(r);
-      setLoading(false);
-    }, 480);
-    return () => clearTimeout(t);
-  }, [debQuery, chainFilter]);
+    if (debQuery !== undefined) {
+      fetchTrials(debQuery);
+    }
+  }, [debQuery]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Filter trials by blockchain type
+  const filteredTrials = trials.filter(trial => {
+    if (chainFilter === "All") return true;
+    if (chainFilter === "Hyperledger") return trial.blockchain?.network === 'hyperledger';
+    if (chainFilter === "Ethereum") return trial.blockchain?.network === 'ethereum';
+    return true;
+  });
 
   function Skeleton() {
     return (
@@ -507,6 +633,7 @@ function App() {
 
   return (
     <div style={{ minHeight:"100vh", width:"100%", background:"#F2F6FC" }}>
+      {/* Your existing header/nav code stays exactly the same */}
       <nav style={{
         position:"fixed", top:0, left:0, right:0, zIndex:200,
         background: scrolled ? "rgba(255,255,255,0.97)" : "white",
@@ -515,22 +642,26 @@ function App() {
         boxShadow: scrolled ? "0 2px 24px rgba(69,103,183,0.10)" : "none",
         transition:"all 0.3s ease",
       }}>
+        {/* Keep your existing header content */}
         <div style={{ maxWidth:1440, margin:"0 auto", padding:"0 40px", height:66, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+          {/* Your logo and nav buttons stay exactly the same */}
           <a href="home.html" style={{ display:"flex", alignItems:"center", gap:12, textDecoration:"none" }}>
             <ShieldLogo size={32}/>
             <div>
               <div style={{ fontSize:20, fontWeight:800, color:"#1A2840", letterSpacing:-0.6, lineHeight:1, fontFamily:"'Sora',sans-serif" }}>
-                WIS<span style={{ color:"#4567B7" }}>ER</span>
+                VIS<span style={{ color:"#4567B7" }}>IOR</span>
               </div>
               <div style={{ fontSize:9, color:"#8FA0BA", letterSpacing:1.5, fontWeight:600, textTransform:"uppercase" }}>Secure Clinical Trials</div>
             </div>
           </a>
+          
           <div style={{ display:"flex", alignItems:"center", gap:8, background:"#F4F7FC", borderRadius:8, padding:"6px 14px", border:"1px solid #E4ECF7" }}>
             <LiveDot active size={6}/>
             <span style={{ fontSize:11, color:"#6B82A8", fontWeight:600, fontFamily:"monospace", letterSpacing:0.3 }}>
               {new Date().toISOString().replace("T"," ").slice(0,19)} UTC
             </span>
           </div>
+          
           <div style={{ display:"flex", gap:10 }}>
             <a href="login.html" style={{
               padding:"8px 20px", borderRadius:9, border:"1.5px solid #D0DCF0",
@@ -554,7 +685,9 @@ function App() {
         </div>
       </nav>
 
+      {/* Hero section - keep exactly as is */}
       <section style={{ paddingTop:118, paddingBottom:72, background:"linear-gradient(175deg,#EDF3FC 0%,#F7FAFF 55%,#F2F6FC 100%)", position:"relative", overflow:"hidden", width:"100%" }}>
+        {/* Your existing hero content stays the same */}
         <div style={{ position:"absolute", top:-100, right:-120, width:560, height:560, borderRadius:"50%", background:"radial-gradient(circle,rgba(69,103,183,1) 0%,transparent 68%)", animation:"pulse 9s ease-in-out infinite", pointerEvents:"none" }}/>
         <div style={{ position:"absolute", bottom:-80, left:-80, width:380, height:380, borderRadius:"50%", background:"radial-gradient(circle,rgba(44,78,158,1) 0%,transparent 68%)", animation:"pulse 11s ease-in-out infinite 3s", pointerEvents:"none" }}/>
         <div style={{ position:"absolute", inset:0, backgroundImage:"linear-gradient(rgba(69,103,183,0.035) 1px,transparent 1px),linear-gradient(90deg,rgba(69,103,183,0.035) 1px,transparent 1px)", backgroundSize:"44px 44px", pointerEvents:"none" }}/>
@@ -577,6 +710,7 @@ function App() {
             Supports Hyperledger Fabric · Ethereum
           </p>
 
+          {/* Search box */}
           <div style={{ position:"relative", maxWidth:720, margin:"0 auto", borderRadius:14, overflow:"hidden", boxShadow: focused ? "0 0 0 3.5px rgba(69,103,183,0.22),0 10px 40px rgba(69,103,183,0.16)" : "0 4px 28px rgba(69,103,183,0.13)", transition:"box-shadow 0.25s" }}>
             <div style={{ position:"absolute", left:20, top:"50%", transform:"translateY(-50%)", zIndex:1, pointerEvents:"none" }}>
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -600,6 +734,7 @@ function App() {
             </button>
           </div>
 
+          {/* Popular tags */}
           <div style={{ display:"flex", gap:8, justifyContent:"center", marginTop:18, flexWrap:"wrap" }}>
             {["Oncology","Phase III","Recruiting","CRISPR","Parkinson's","Vaccine","Rare Disease"].map(tag => (
               <button key={tag} onClick={() => setQuery(tag)} style={{ padding:"5px 15px", borderRadius:100, border:"1px solid #C8D9F0", background:"rgba(255,255,255,0.75)", fontSize:11, color:"#4567B7", fontWeight:600, cursor:"pointer", backdropFilter:"blur(4px)", transition:"all 0.18s", fontFamily:"'DM Sans',sans-serif" }}
@@ -611,6 +746,7 @@ function App() {
         </div>
       </section>
 
+      {/* Stats strip */}
       <div style={{ background:"white", borderTop:"1px solid #E4ECF7", borderBottom:"1px solid #E4ECF7", width:"100%" }}>
         <div style={{ maxWidth:1440, margin:"0 auto", padding:"0 40px", display:"flex", flexWrap:"wrap" }}>
           {[
@@ -628,16 +764,23 @@ function App() {
         </div>
       </div>
 
+      {/* Main content */}
       <main style={{ maxWidth:1440, margin:"0 auto", padding:"50px 40px 100px", width:"100%" }}>
-        <ChainPanel trials={trials.length > 0 ? trials : MOCK_TRIALS} />
-
+        <ChainPanel trials={filteredTrials.length > 0 ? filteredTrials : MOCK_TRIALS} />
+        
         <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:26, flexWrap:"wrap", gap:14 }}>
           <div>
             <h2 style={{ fontSize:23, fontWeight:700, color:"#1A2840", fontFamily:"'Sora',sans-serif", letterSpacing:-0.5, margin:0 }}>
               Latest Verified Trials
             </h2>
             <p style={{ fontSize:12, color:"#8FA0BA", marginTop:4 }}>
-              {loading ? "Fetching from blockchain nodes…" : `${trials.length} trial${trials.length!==1?"s":""} found${query?` for "${query}"`:""}`}
+              {error ? (
+                <span style={{ color: "#e55353" }}>⚠️ {error}</span>
+              ) : loading ? (
+                "Fetching from blockchain nodes…"
+              ) : (
+                `${filteredTrials.length} trial${filteredTrials.length!==1?"s":""} found${query?` for "${query}"`:""}`
+              )}
             </p>
           </div>
           <div style={{ display:"flex", gap:8 }}>
@@ -657,7 +800,7 @@ function App() {
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(500px,1fr))", gap:22 }}>
           {loading
             ? Array(6).fill(0).map((_,i) => <Skeleton key={i}/>)
-            : trials.length === 0
+            : filteredTrials.length === 0
               ? (
                 <div style={{ gridColumn:"1/-1", textAlign:"center", padding:"72px 0" }}>
                   <div style={{ fontSize:44, marginBottom:14 }}>🔍</div>
@@ -666,20 +809,21 @@ function App() {
                   <button onClick={() => { setQuery(""); setChainFilter("All"); }} style={{ marginTop:18, padding:"9px 22px", borderRadius:9, border:"1.5px solid #4567B7", background:"white", color:"#4567B7", fontSize:12, fontWeight:600, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>Clear Search</button>
                 </div>
               )
-              : trials.map((t,i) => (
+              : filteredTrials.map((t,i) => (
                 <TrialCard key={t.id} trial={t} idx={i}/>
               ))
           }
         </div>
       </main>
 
+      {/* Footer */}
       <footer style={{ background:"#0C1624", padding:"52px 40px 32px", width:"100%" }}>
         <div style={{ maxWidth:1440, margin:"0 auto" }}>
           <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:40, flexWrap:"wrap", gap:32 }}>
             <div style={{ maxWidth:300 }}>
               <div style={{ display:"flex", alignItems:"center", gap:11, marginBottom:14 }}>
                 <ShieldLogo size={32}/>
-                <span style={{ fontFamily:"'Sora',sans-serif", fontSize:22, fontWeight:800, color:"white", letterSpacing:-0.6 }}>WIS<span style={{ color:"#4567B7" }}>ER</span></span>
+                <span style={{ fontFamily:"'Sora',sans-serif", fontSize:22, fontWeight:800, color:"white", letterSpacing:-0.6 }}>VIS<span style={{ color:"#4567B7" }}>IOR</span></span>
               </div>
               <p style={{ fontSize:12, color:"rgba(255,255,255,0.32)", lineHeight:1.8 }}>
                 A global clinical trials transparency platform powered by multi-blockchain verification and enterprise-grade database infrastructure.
