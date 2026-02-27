@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VISIOR — Report SAE</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: #f4f7fc; color: #1a2035; }
+  .header { background: white; border-bottom: 1px solid #e2e6f0; padding: 0 32px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; cursor: pointer; }
+  .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, #4567B7, #334e96); border-radius: 9px; display: flex; align-items: center; justify-content: center; }
+  .main { max-width: 800px; margin: 40px auto; padding: 0 32px; }
+  .back-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border: 1px solid #e2e6f0; border-radius: 6px; background: white; cursor: pointer; margin-bottom: 24px; }
+  .form-container { background: white; border-radius: 12px; border: 1px solid #e2e6f0; padding: 32px; }
+  h1 { font-size: 28px; margin-bottom: 8px; }
+  .subtitle { color: #5a6480; margin-bottom: 32px; }
+  .form-group { margin-bottom: 20px; }
+  label { display: block; font-weight: 600; margin-bottom: 8px; }
+  input, select, textarea { width: 100%; padding: 10px; border: 1px solid #e2e6f0; border-radius: 6px; }
+  .btn { background: #4567B7; color: white; padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; }
+  .warning-box { background: #fff5f5; border: 1px solid #fecaca; padding: 16px; border-radius: 8px; margin-bottom: 24px; display: flex; gap: 12px; }
+  .footer-links { display: flex; justify-content: center; gap: 16px; margin-top: 40px; padding: 20px 0; border-top: 1px solid #e2e6f0; }
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="logo" onclick="window.location.href='home.html'">
+    <div class="logo-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+        <path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.5C16.5 22.15 20 17.25 20 12V6L12 2z"/>
+      </svg>
+    </div>
+    <div><strong style="color: #4567B7;">VISIOR</strong></div>
+  </div>
+</header>
+
+<div class="main">
+  <button class="back-btn" onclick="window.history.back()">← Back</button>
+  <div class="form-container">
+    <div class="warning-box">
+      <span style="font-size: 24px;">🚨</span>
+      <div>
+        <strong>Serious Adverse Event Report</strong><br>
+        <span style="color: #ef4444;">This will be recorded on blockchain</span>
+      </div>
+    </div>
+    <h1>Report Serious Adverse Event</h1>
+    <form id="saeForm">
+      <div class="form-group">
+        <label>Trial</label>
+        <select id="trial">
+          <option>CARDIOPROTECT-II (VISIOR-2024-003)</option>
+          <option>NEURO-RESTORE (VISIOR-2024-011)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Patient ID</label>
+        <select id="patient">
+          <option>P0301 - James Harrison</option>
+          <option>P0307 - Margaret Sullivan</option>
+          <option>P0482 - Susan Taylor</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Event Type</label>
+        <select id="eventType">
+          <option>Cardiac Event</option>
+          <option>Stroke</option>
+          <option>Hospitalization</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea id="description" rows="4"></textarea>
+      </div>
+      <button type="button" class="btn" onclick="submitSAE()">Submit Report</button>
+    </form>
+  </div>
+  <div class="footer-links">
+    <a href="home.html">Home</a> <a href="help.html">Help</a> <a href="privacy.html">Privacy</a> <a href="terms.html">Terms</a>
+  </div>
+</div>
+<script>
+function submitSAE() {
+  alert('✅ SAE Report Submitted\nTransaction: 0x' + 
+        Array.from({length:40},()=>Math.floor(Math.random()*16).toString(16)).join(''));
+  window.location.href = 'pi-dashboard.html';
+}
+</script>
+</body>
+</html>
